@@ -1,4 +1,4 @@
-package frgp.utn.edu.tpgrupo27;
+package frgp.utn.edu.tpgrupo27.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
