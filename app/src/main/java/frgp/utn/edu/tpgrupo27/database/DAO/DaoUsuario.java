@@ -40,4 +40,48 @@ public class DaoUsuario {
 
         return resultado;
     }
+
+    public boolean modificarUsuario(Usuario usuario) {
+        SQLiteDatabase baseDatosAPP = baseDeDatos.getWritableDatabase();
+        boolean resultado = false;
+
+        try {
+            ContentValues registro = new ContentValues();
+
+            if (usuario.getNombre() != null && !usuario.getNombre().isEmpty()) {
+                registro.put("nombre", usuario.getNombre());
+            }
+            if (usuario.getApellido() != null && !usuario.getApellido().isEmpty()) {
+                registro.put("apellido", usuario.getApellido());
+            }
+            if (usuario.getContrasena() != null && !usuario.getContrasena().isEmpty()) {
+                registro.put("contrasena", usuario.getContrasena());
+            }
+            if (usuario.getMail() != null && !usuario.getMail().isEmpty()) {
+                registro.put("mail", usuario.getMail());
+            }
+            if (usuario.getFechaNacimiento() != null && !usuario.getFechaNacimiento().isEmpty()) {
+                registro.put("fechaNacimiento", usuario.getFechaNacimiento());
+            }
+
+            if (registro.size() > 0) {
+                int filasAfectadas = baseDatosAPP.update(
+                        "Usuario",
+                        registro,
+                        "idUsuario = ?",
+                        new String[]{String.valueOf(usuario.getIdUsuario())}
+                );
+
+                if (filasAfectadas > 0) {
+                    resultado = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            baseDatosAPP.close();
+        }
+
+        return resultado;
+    }
 }
