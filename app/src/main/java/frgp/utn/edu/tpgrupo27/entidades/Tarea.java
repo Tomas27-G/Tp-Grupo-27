@@ -23,49 +23,35 @@ public class Tarea {
     this.prioridad = prioridad;
   }
 
-    public int getIdTarea() {
-        return idTarea;
-    }
+    public int getIdTarea() {return idTarea;}
 
-    public void setIdTarea(int idTarea) {
-        this.idTarea = idTarea;
-    }
+    public void setIdTarea(int idTarea) {this.idTarea = idTarea;}
 
-    public String getNombreTarea() {
-        return nombreTarea;
-    }
+    public String getNombreTarea() {return nombreTarea;}
 
     public void setNombreTarea(String nombreTarea) {
-        this.nombreTarea = nombreTarea;
+      this.nombreTarea = nombreTarea;
     }
 
-    public String getDescripcionTarea() {
-        return descripcionTarea;
-    }
+    public String getDescripcionTarea() {return descripcionTarea;}
 
     public void setDescripcionTarea(String descripcionTarea) {
         this.descripcionTarea = descripcionTarea;
     }
 
-    public long getFechaInicio() {
-        return fechaInicio;
-    }
+    public long getFechaInicio() {return fechaInicio;}
 
     public void setFechaInicio(long fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public long getFechaFinal() {
-        return fechaFinal;
-    }
+    public long getFechaFinal() {return fechaFinal;}
 
     public void setFechaFinal(long fechaFinal) {
         this.fechaFinal = fechaFinal;
     }
 
-    public int getPrioridad() {
-        return prioridad;
-    }
+    public int getPrioridad() {return prioridad;}
 
     public void setPrioridad(int prioridad) {
         this.prioridad = prioridad;
