@@ -57,12 +57,7 @@ public class DaoTarea {
             }else {
                 return false;
             }
-
-
-
         }
-
-
         return false;
     }
 }

@@ -8,10 +8,8 @@ public class Usuario {
     private String mail;
     private String fechaNacimiento;
 
-    // Constructor vacío
     public Usuario() {}
 
-    // Constructor completo
     public Usuario(int idUsuario, String nombre, String apellido, String contrasena, String mail, String fechaNacimiento) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
