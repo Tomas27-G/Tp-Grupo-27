@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- TÍTULO -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hábitos"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"/>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:padding="8dp"
+        android:background="#C8E6C9"
+        android:stretchColumns="1">
+
+        <!-- Nombre -->
+        <TableRow>
+            <TextView
+                android:text="Nombre del hábito"
+                android:layout_margin="6dp"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="Ingrese nombre"
+                android:inputType="text"
+                android:layout_margin="6dp"/>
+        </TableRow>
+
+
+        <TableRow>
+            <TextView
+                android:text="Descripción"
+                android:layout_margin="6dp"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="Ingrese descripción"
+                android:inputType="textMultiLine"
+                android:layout_margin="6dp"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="Fecha inicio"
+                android:layout_margin="6dp"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="DD/MM/AAAA"
+                android:inputType="date"
+                android:layout_margin="6dp"/>
+        </TableRow>
+
+
+        <TableRow>
+            <TextView
+                android:text="Fecha final"
+                android:layout_margin="6dp"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="DD/MM/AAAA"
+                android:inputType="date"
+                android:layout_margin="6dp"/>
+        </TableRow>
+
+
+        <TableRow>
+
+            <TextView
+                android:text="Frecuencia"
+                android:layout_margin="6dp"
+                android:layout_gravity="center_vertical"/>
+
+            <Spinner
+                android:id="@+id/spinnerFrecuencia"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"/>
+
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="Hora"
+                android:layout_margin="6dp"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="HH:MM"
+                android:inputType="time"
+                android:layout_margin="6dp"/>
+        </TableRow>
+
+        <TableRow
+            android:gravity="center">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Guardar Hábito"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#4CAF50"
+                android:textColor="#FFFFFF"/>
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>
