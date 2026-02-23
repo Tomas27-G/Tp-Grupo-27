@@ -84,4 +84,58 @@ public class DaoUsuario {
 
         return resultado;
     }
+
+    public Usuario loginUsuario(String mail, String contrasena) {
+        SQLiteDatabase baseDatosAPP = baseDeDatos.getReadableDatabase();
+        Usuario usuario = null;
+
+        try {
+            Cursor cursor = baseDatosAPP.rawQuery(
+                    "SELECT * FROM Usuario WHERE mail = ? AND contrasena = ?",
+                    new String[]{mail, contrasena}
+            );
+
+            if (cursor.moveToFirst()) {
+                usuario = new Usuario();
+                usuario.setIdUsuario(cursor.getInt(cursor.getColumnIndexOrThrow("idUsuario")));
+                usuario.setNombre(cursor.getString(cursor.getColumnIndexOrThrow("nombre")));
+                usuario.setApellido(cursor.getString(cursor.getColumnIndexOrThrow("apellido")));
+                usuario.setContrasena(cursor.getString(cursor.getColumnIndexOrThrow("contrasena")));
+                usuario.setMail(cursor.getString(cursor.getColumnIndexOrThrow("mail")));
+                usuario.setFechaNacimiento(cursor.getString(cursor.getColumnIndexOrThrow("fechaNacimiento")));
+            }
+
+            cursor.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            baseDatosAPP.close();
+        }
+
+        return usuario;
+    }
+
+
+    public boolean eliminarUsuario(Usuario usuario) {
+        SQLiteDatabase baseDatosAPP = baseDeDatos.getWritableDatabase();
+        boolean resultado = false;
+
+        try {
+            int filasAfectadas = baseDatosAPP.delete(
+                    "Usuario",
+                    "idUsuario = ?",
+                    new String[]{String.valueOf(usuario.getIdUsuario())}
+            );
+
+            if (filasAfectadas > 0) {
+                resultado = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            baseDatosAPP.close();
+        }
+
+        return resultado;
+    }
 }
