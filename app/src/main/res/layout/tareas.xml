@@ -1,114 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/green">
-    <TextView
-        android:layout_width="match_parent"
+    android:background="@drawable/bg_gradient">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Tareas"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginBottom="16dp"/>
+        app:cardCornerRadius="28dp"
+        app:cardElevation="8dp"
+        android:layout_margin="32dp"
+        android:backgroundTint="#C8E6C9"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:padding="8dp"
-        android:background="#C8E6C9"
-        android:stretchColumns="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
 
-
-        <TableRow>
+            <!-- Título -->
             <TextView
-                android:text="Nombre de la tarea"
-                android:layout_margin="6dp"/>
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:hint="Ingrese nombre"
-                android:inputType="text"
-                android:layout_margin="6dp"/>
-        </TableRow>
-
-
-        <TableRow>
-            <TextView
-                android:text="Descripción"
-                android:layout_margin="6dp"/>
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:hint="Ingrese descripción"
-                android:inputType="textMultiLine"
-                android:layout_margin="6dp"/>
-        </TableRow>
-
-        <TableRow>
-            <TextView
-                android:text="Fecha inicio"
-                android:layout_margin="6dp"/>
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:hint="DD/MM/AAAA"
-                android:inputType="date"
-                android:layout_margin="6dp"/>
-        </TableRow>
-
-
-        <TableRow>
-            <TextView
-                android:text="Fecha final"
-                android:layout_margin="6dp"/>
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:hint="DD/MM/AAAA"
-                android:inputType="date"
-                android:layout_margin="6dp"/>
-        </TableRow>
-
-
-        <TableRow>
-
-            <TextView
-                android:text="Prioridad"
-                android:layout_margin="6dp"
-                android:layout_gravity="center_vertical"/>
-
-            <Spinner
-                android:id="@+id/spinnerPrioridad"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_margin="6dp"/>
-
-        </TableRow>
-
-        <TableRow
-            android:gravity="center">
-
-            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Guardar Hábito"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="#4CAF50"
-                android:textColor="#FFFFFF"/>
-        </TableRow>
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:text="Crear Tarea"
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
-    </TableLayout>
+            <!-- Nombre -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Nombre de la tarea">
 
-</LinearLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Descripción -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Descripción">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Fecha inicio -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Fecha inicio (DD/MM/AAAA)">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Fecha final -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Fecha final (DD/MM/AAAA)">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Prioridad -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:hint="Prioridad">
+
+                <Spinner
+                    android:id="@+id/spinnerPrioridad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Botón -->
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:backgroundTint="#1976D2"
+                android:text="Guardar Tarea"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                app:cornerRadius="28dp"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
