@@ -25,14 +25,15 @@
             android:padding="32dp">
 
             <!-- Logo -->
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- Logo -->
+            <ImageView
+                android:id="@+id/logoHabity"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="16dp"
-                android:text="Habity"
-                android:textSize="22sp"
-                android:textStyle="bold" />
+                android:layout_marginBottom="12dp"
+                android:src="@drawable/logo"
+                android:contentDescription="Logo Habity"/>
 
             <!-- Título -->
             <TextView
