@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import utils.session;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -42,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
             if (item.getItemId() == R.id.habitos) {
                 fragment = new fragmentHabitos();
             }
+            if (item.getItemId() == R.id.agenda) {
+                fragment = new fragmentAgenda();
+            }
 
             if (fragment != null) {
                 getSupportFragmentManager()
@@ -53,5 +58,22 @@ public class MainActivity extends AppCompatActivity {
 
             return false;
         });
+
+        session session = new session(this);
+
+        if(!session.estaLogueado()){
+            // Usuario no logueado → mostrar login
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new fragmentLogin())
+                    .commit();
+        } else {
+            // Usuario logueado → mostrar fragmento de inicio
+            if (savedInstanceState == null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new fragmentInicio())
+                        .commit();
+            }
+        }
     }
 }

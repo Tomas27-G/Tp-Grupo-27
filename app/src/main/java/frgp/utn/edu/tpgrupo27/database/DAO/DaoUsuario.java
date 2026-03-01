@@ -20,14 +20,13 @@ public class DaoUsuario {
 
         try {
             ContentValues registro = new ContentValues();
-            registro.put("idUsuario", usuario.getIdUsuario());
             registro.put("nombre", usuario.getNombre());
             registro.put("apellido", usuario.getApellido());
             registro.put("contrasena", usuario.getContrasena());
             registro.put("mail", usuario.getMail());
             registro.put("fechaNacimiento", usuario.getFechaNacimiento());
 
-            long filaInsertada = baseDatosAPP.insert("Usuario", null, registro);
+            long filaInsertada = baseDatosAPP.insert("usuarios", null, registro);
 
             if (filaInsertada != -1) {
                 resultado = true;
@@ -66,7 +65,7 @@ public class DaoUsuario {
 
             if (registro.size() > 0) {
                 int filasAfectadas = baseDatosAPP.update(
-                        "Usuario",
+                        "usuarios",
                         registro,
                         "idUsuario = ?",
                         new String[]{String.valueOf(usuario.getIdUsuario())}
@@ -91,7 +90,7 @@ public class DaoUsuario {
 
         try {
             Cursor cursor = baseDatosAPP.rawQuery(
-                    "SELECT * FROM Usuario WHERE mail = ? AND contrasena = ?",
+                    "SELECT * FROM usuarios WHERE mail = ? AND contrasena = ?",
                     new String[]{mail, contrasena}
             );
 
@@ -122,7 +121,7 @@ public class DaoUsuario {
 
         try {
             int filasAfectadas = baseDatosAPP.delete(
-                    "Usuario",
+                    "usuarios",
                     "idUsuario = ?",
                     new String[]{String.valueOf(usuario.getIdUsuario())}
             );
