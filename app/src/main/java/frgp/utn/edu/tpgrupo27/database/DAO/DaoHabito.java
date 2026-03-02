@@ -116,4 +116,37 @@ public class DaoHabito {
 
     }
 
+    public java.util.List<Habito> listaDeHabitos(){
+
+        java.util.List<Habito> lista = new java.util.ArrayList<>();
+
+        SQLiteDatabase db = baseDeDatos.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT nombreHabito, descripcionHabito, fechaInicio, fechaFinal, frecuencia, hora FROM habitos",
+                null
+        );
+
+        if(cursor.moveToFirst()){
+            do{
+                Habito h = new Habito();
+
+                h.setNombreHabito(cursor.getString(0));
+                h.setDescripcionHabito(cursor.getString(1));
+                h.setFechaInicio(cursor.getLong(2));
+                h.setFechaFinal(cursor.getLong(3));
+                h.setFrecuencia(cursor.getInt(4));
+                h.setHora(cursor.getString(5));
+
+                lista.add(h);
+
+            }while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return lista;
+    }
+
 }

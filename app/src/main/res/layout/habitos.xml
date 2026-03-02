@@ -2,25 +2,26 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_gradient">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="28dp"
-        app:cardElevation="8dp"
+        android:layout_width="380dp"
+        android:layout_height="688dp"
         android:layout_margin="32dp"
         android:backgroundTint="#C8E6C9"
-        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="28dp"
+        app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="710dp"
             android:orientation="vertical"
             android:padding="24dp">
 
@@ -31,8 +32,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="12dp"
-                android:src="@drawable/logo"
-                android:contentDescription="Logo Habity"/>
+                android:contentDescription="Logo Habity"
+                android:src="@drawable/logo" />
 
             <!-- Título -->
             <TextView
@@ -53,26 +54,24 @@
                 android:hint="Nombre del hábito">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nombreHabito"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Descripción -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/descripHabito"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:hint="Descripción">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Fecha inicio -->
+
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
@@ -81,9 +80,11 @@
                 android:hint="Fecha inicio (DD/MM/AAAA)">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fechaInicioHabito"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="date"/>
+                    android:inputType="date" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Fecha final -->
@@ -95,9 +96,10 @@
                 android:hint="Fecha final (DD/MM/AAAA)">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fechaFinalHabito"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="date"/>
+                    android:inputType="date" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Frecuencia -->
@@ -111,7 +113,8 @@
                 <Spinner
                     android:id="@+id/spinnerFrecuencia"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:entries="@array/frecuencia_spinner"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Hora -->
@@ -123,22 +126,36 @@
                 android:hint="Hora (HH:MM)">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/horaHabito"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="time"/>
+                    android:inputType="time" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Botón -->
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/botonGuardarHabito"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:backgroundTint="#1976D2"
                 android:text="Guardar Hábito"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
-                app:cornerRadius="28dp"/>
+                app:cornerRadius="28dp" />
+
+            <ListView
+                android:id="@+id/listViewHabitos"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:dividerHeight="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
 
         </LinearLayout>
+
 
     </androidx.cardview.widget.CardView>
 
