@@ -1,6 +1,7 @@
 package frgp.utn.edu.tpgrupo27;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,13 +26,25 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        BottomNavigationView bottomNavigation = findViewById(R.id.buttom_navigation);
-        // Cargar fragmento inicial por defecto si es la primera vez
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new fragmentInicio())
-                    .commit();
+        session session = new session(this);
+        BottomNavigationView bottomNavigation =
+                findViewById(R.id.buttom_navigation);
+
+        Fragment fragmentInicial;
+
+        if(!session.estaLogueado()){
+            fragmentInicial = new fragmentLogin();
+            bottomNavigation.setVisibility(View.GONE);
+        } else {
+            fragmentInicial = new fragmentInicio();
+            bottomNavigation.setVisibility(View.VISIBLE);
         }
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragmentInicial)
+                .commit();
+
         bottomNavigation.setOnItemSelectedListener(item -> {
 
             Fragment fragment = null;
@@ -59,21 +72,6 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
-        session session = new session(this);
 
-        if(!session.estaLogueado()){
-            // Usuario no logueado → mostrar login
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, new fragmentLogin())
-                    .commit();
-        } else {
-            // Usuario logueado → mostrar fragmento de inicio
-            if (savedInstanceState == null) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new fragmentInicio())
-                        .commit();
-            }
-        }
     }
 }

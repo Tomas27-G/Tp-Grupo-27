@@ -91,7 +91,6 @@ public class fragmentRegistro extends Fragment {
                     "Usuario registrado correctamente",
                     Toast.LENGTH_SHORT).show();
 
-            // ⭐ OPCIONAL: loguear automáticamente
             session session = new session(requireContext());
             session.crearSesion(usuario.getIdUsuario());
 
