@@ -77,33 +77,34 @@ public class fragmentHabitos extends Fragment {
         cargarListaHabitos();  // 👈 LLAMAMOS ACÁ
 
 
-        TextView tvHabito = view.findViewById(R.id.tvLogin); ///CAMBIAR ESTO
-
-        tvHabito.setOnClickListener(v ->
-                requireActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, new fragmentHabitos())
-                        .addToBackStack(null)
-                        .commit()
-        );
-
-
 
 
     }
 
+    private Long convertirFecha(String fecha) {
+        try {
+            java.text.SimpleDateFormat sdf =
+                    new java.text.SimpleDateFormat("dd/MM/yyyy");
+
+            java.util.Date date = sdf.parse(fecha);
+            return date.getTime(); // ← Long válido
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0L;
+        }
+    }
     private void guardarHabito(){
         String nombreH = nombreHabito.getText().toString().trim();
         String descripH = descripHabito.getText().toString().trim();
-        Long fechaInicioH = Long.parseLong(this.fechaInicioHabito.getText().toString().trim());
-        Long fechaFinalH = Long.parseLong(this.fechaFinalHabito.getText().toString().trim());
+        Long fechaInicioH = convertirFecha(fechaInicioHabito.getText().toString().trim());
+        Long fechaFinalH = convertirFecha(fechaFinalHabito.getText().toString().trim());
         String horaH = horaHabito.getText().toString().trim();
 
         int spinnerFrecuenciaH = spinnerFrecuencia.getSelectedItemPosition() + 1;
 
 
         if(nombreH.isEmpty() || descripH.isEmpty()
-                || spinnerFrecuenciaH > 0 || horaH.isEmpty() ){
+                || spinnerFrecuenciaH <= 0 || horaH.isEmpty() ){
 
             Toast.makeText(requireContext(),
                     "Completa todos los campos",
@@ -134,6 +135,14 @@ public class fragmentHabitos extends Fragment {
                     Toast.LENGTH_SHORT).show();
         }
     }
+    private String formatearFecha(Long timestamp) {
+
+        java.text.SimpleDateFormat sdf =
+                new java.text.SimpleDateFormat("dd/MM/yyyy",
+                        java.util.Locale.getDefault());
+
+        return sdf.format(new java.util.Date(timestamp));
+    }
     private void cargarListaHabitos(){
 
         negocioHabito negocio = new negocioHabito(requireContext());
@@ -144,8 +153,8 @@ public class fragmentHabitos extends Fragment {
         for(Habito h : listaHabitos){
 
             String texto = h.getNombreHabito() + " - "
-                    + h.getFechaInicio() + " - "
-                    + h.getFechaFinal() + " - "
+                    + formatearFecha(h.getFechaInicio()) + " - "
+                    + formatearFecha(h.getFechaFinal()) + " - "
                     + h.getHora();
 
             listaTexto.add(texto);

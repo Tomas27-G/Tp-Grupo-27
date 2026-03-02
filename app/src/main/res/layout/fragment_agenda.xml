@@ -34,39 +34,23 @@
                 android:text="Agenda"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="14dp"/>
+                android:layout_marginBottom="16dp"/>
 
-            <!-- SELECTOR -->
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chipGroup"
+            <!-- SUBTITULO -->
+            <TextView
+                android:id="@+id/txtInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:singleSelection="true">
+                android:text="Tus eventos aparecerán aquí"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginBottom="12dp"/>
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipDia"
-                    android:text="Día"
-                    android:checked="true"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"/>
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipSemana"
-                    android:text="Semana"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"/>
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipMes"
-                    android:text="Mes"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"/>
-
-            </com.google.android.material.chip.ChipGroup>
-
-            <!-- GRID AGENDA -->
+            <!-- LISTA AGENDA -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvAgenda"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="18dp"
                 android:layout_weight="1"/>
 
         </LinearLayout>

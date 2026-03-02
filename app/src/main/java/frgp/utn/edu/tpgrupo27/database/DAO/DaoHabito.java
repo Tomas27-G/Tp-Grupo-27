@@ -24,24 +24,25 @@ public class DaoHabito {
                 habito.getFechaFinal() > 0 &&
                 habito.getFrecuencia() > 0 &&
                 habito.getHora() != null && !habito.getHora().isEmpty()) {
-            return false;
+
+            SQLiteDatabase baseDatosApp = baseDeDatos.getWritableDatabase();
+
+            ContentValues registro = new ContentValues();
+            registro.put("nombreHabito", habito.getNombreHabito());
+            registro.put("descripcionHabito", habito.getDescripcionHabito());
+            registro.put("fechaInicio", habito.getFechaInicio());
+            registro.put("fechaFinal", habito.getFechaFinal());
+            registro.put("frecuencia", habito.getFrecuencia());
+            registro.put("hora", habito.getHora());
+
+            baseDatosApp.insert("habitos", null, registro);
+
+            baseDatosApp.close();
+            return true;
         }
 
-        SQLiteDatabase baseDatosApp = baseDeDatos.getWritableDatabase();
 
-        ContentValues registro = new ContentValues();
-        registro.put("nombreHabito", habito.getNombreHabito());
-        registro.put("descripcionHabito", habito.getDescripcionHabito());
-        registro.put("fechaInicio", habito.getFechaInicio());
-        registro.put("fechaFinal", habito.getFechaFinal());
-        registro.put("frecuencia", habito.getFrecuencia());
-        registro.put("hora", habito.getHora());
-
-        baseDatosApp.insert("habitos", null, registro);
-
-        baseDatosApp.close();
-
-        return true;
+        return false;
     }
 
     public boolean consultaHabito(Habito habito) {
