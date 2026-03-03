@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -26,7 +27,17 @@ public class fragmentLogin extends Fragment {
     private MaterialButton btnLogin;
 
     public fragmentLogin() {}
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        BottomNavigationView nav =
+                requireActivity().findViewById(R.id.buttom_navigation);
+
+        if (nav != null) {
+            nav.setVisibility(View.GONE);
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
