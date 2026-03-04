@@ -5,11 +5,15 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
+
+
+import utils.session;
 
 
 public class fragmentInicio extends Fragment {
@@ -44,13 +48,19 @@ public class fragmentInicio extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView tvCerrar = view.findViewById(R.id.tvCerrar);
+        session session = new session(getContext());
 
-        tvCerrar.setOnClickListener(v ->
-                requireActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, new fragmentLogin())
-                        .addToBackStack(null)
-                        .commit()
-        );
-}  }
+        Button btnCerrar = view.findViewById(R.id.btnCerrar);
+
+        btnCerrar.setOnClickListener(v -> {
+            session.cerrarSesion();
+
+
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new fragmentLogin())
+                    .commit();
+        });
+    }
+
+}
