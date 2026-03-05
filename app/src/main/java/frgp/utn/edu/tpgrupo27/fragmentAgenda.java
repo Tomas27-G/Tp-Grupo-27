@@ -19,7 +19,7 @@ import frgp.utn.edu.tpgrupo27.entidades.Tarea;
 
 public class fragmentAgenda extends Fragment {
 
-    private ListView lvAgenda;
+    private ListView lvTareas;
     private DaoTarea daoTarea;
 
     public fragmentAgenda() {}
@@ -29,7 +29,7 @@ public class fragmentAgenda extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_agenda, container, false);
 
-        lvAgenda = view.findViewById(R.id.lvAgenda);
+        lvTareas = view.findViewById(R.id.lvTareas);
         daoTarea = new DaoTarea(getContext());
 
         mostrarTareas();
@@ -64,6 +64,6 @@ public class fragmentAgenda extends Fragment {
                 listaStrings
         );
 
-        lvAgenda.setAdapter(adapter);
+        lvTareas.setAdapter(adapter);
     }
 }
