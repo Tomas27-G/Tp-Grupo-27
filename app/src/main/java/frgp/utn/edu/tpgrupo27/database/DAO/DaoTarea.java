@@ -21,6 +21,7 @@ public class DaoTarea {
                 tarea.getFechaInicio() > 0 &&
                 tarea.getFechaFinal() > 0 &&
                 tarea.getPrioridad() > 0){
+
             SQLiteDatabase baseDatosApp = baseDeDatos.getWritableDatabase();
 
             ContentValues registrar = new ContentValues();
@@ -30,14 +31,14 @@ public class DaoTarea {
             registrar.put("fechaFinal", tarea.getFechaFinal());
             registrar.put("prioridad", tarea.getPrioridad());
 
-            baseDatosApp.insert("tarea", null, registrar);
+            long resultado = baseDatosApp.insert("tareas", null, registrar);
 
             baseDatosApp.close();
-            return true;
-        } else{
-            return false;
+
+            return resultado != -1;
         }
 
+        return false;
     }
 
     public boolean buscarTarea (Tarea tarea){
@@ -45,8 +46,8 @@ public class DaoTarea {
         if(tarea.getNombreTarea()!= null){
             Cursor fila = baseDatosApp.rawQuery(
                     "SELECT nombreTarea, descripcionTarea, fechaInicio, fechaFinal, prioridad " +
-                            "FROM tarea WHERE nombreTarea = "+
-                    tarea.getNombreTarea(), null
+                            "FROM tareas WHERE nombreTarea = ?",
+                    new String[]{tarea.getNombreTarea()}
             );
             if (fila.moveToFirst()){
                 tarea.setDescripcionTarea(fila.getString(0));
@@ -80,7 +81,7 @@ public class DaoTarea {
             registrar.put("prioridad", tarea.getPrioridad());
 
             int cantidad = baseDatosApp.update
-                    ("tarea",registrar,"where nombreTarea ="+
+                    ("tareas",registrar,"where nombreTarea ="+
                             tarea.getNombreTarea(),null);
             baseDatosApp.close();
             if (cantidad > 0){
@@ -99,7 +100,7 @@ public class DaoTarea {
         String nombreT = tarea.getNombreTarea();
         if(!nombreT.isEmpty()){
             int cantidad = baseDatosApp.delete
-                    ("tarea","where nombreTarea=" + nombreT, null);
+                    ("tareas","where nombreTarea=" + nombreT, null);
             if (cantidad == 1){
                 return true;
             }else{

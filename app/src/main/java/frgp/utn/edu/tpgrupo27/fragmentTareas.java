@@ -1,32 +1,131 @@
 package frgp.utn.edu.tpgrupo27;
 
-import android.app.Activity;
 import android.os.Bundle;
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
-public class fragmentTareas extends Fragment {
-    public static fragmentTareas newInstance(String param1, String param2) {
-        fragmentTareas fragment = new fragmentTareas();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+import frgp.utn.edu.tpgrupo27.database.DAO.DaoTarea;
+import frgp.utn.edu.tpgrupo27.entidades.Tarea;
+
+    public class fragmentTareas extends Fragment {
+
+        private TextInputEditText etNombreTarea;
+        private TextInputEditText etDescripcionTarea;
+        private TextInputEditText etFechaInicio;
+        private TextInputEditText etFechaFinal;
+        private Spinner spinnerPrioridad;
+        private MaterialButton btnGuardar;
+
+        private DaoTarea daoTarea;
+
+        public fragmentTareas() {
+            // Required empty public constructor
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+
+            View view = inflater.inflate(R.layout.tareas, container, false);
+
+            etNombreTarea = view.findViewById(R.id.etNombreTarea);
+            etDescripcionTarea = view.findViewById(R.id.etDescripcionTarea);
+            etFechaInicio = view.findViewById(R.id.etFechaInicio);
+            etFechaFinal = view.findViewById(R.id.etFechaFinal);
+            spinnerPrioridad = view.findViewById(R.id.spinnerPrioridad);
+            cargarSpinnerPrioridad();
+            btnGuardar = view.findViewById(R.id.btnGuardarTarea);
+
+            daoTarea = new DaoTarea(getContext());
+
+            btnGuardar.setOnClickListener(v -> guardarTarea());
+
+            return view;
+        }
+        private void cargarSpinnerPrioridad() {
+            String[] prioridades = {"Baja", "Media", "Alta"};
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                    getContext(),
+                    android.R.layout.simple_spinner_item,
+                    prioridades
+            );
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerPrioridad.setAdapter(adapter);
+        }
+
+        private void guardarTarea() {
+
+            String nombre = etNombreTarea.getText().toString();
+            String descripcion = etDescripcionTarea.getText().toString();
+            String fechaInicioStr = etFechaInicio.getText().toString();
+            String fechaFinalStr = etFechaFinal.getText().toString();
+
+            if(nombre.isEmpty() || descripcion.isEmpty() || fechaInicioStr.isEmpty() || fechaFinalStr.isEmpty()){
+                Toast.makeText(getContext(), "Complete todos los campos", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            int prioridad = spinnerPrioridad.getSelectedItemPosition() + 1;
+
+            long fechaInicio = convertirFecha(fechaInicioStr);
+            long fechaFinal = convertirFecha(fechaFinalStr);
+
+            if(fechaInicio == 0 || fechaFinal == 0){
+                Toast.makeText(getContext(), "Formato de fecha incorrecto (dd/MM/yyyy)", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Tarea tarea = new Tarea();
+            tarea.setNombreTarea(nombre);
+            tarea.setDescripcionTarea(descripcion);
+            tarea.setFechaInicio(fechaInicio);
+            tarea.setFechaFinal(fechaFinal);
+            tarea.setPrioridad(prioridad);
+
+            boolean resultado = daoTarea.altaTarea(tarea);
+
+            if (resultado) {
+                Toast.makeText(getContext(), "Tarea guardada correctamente", Toast.LENGTH_SHORT).show();
+                limpiarCampos();
+            } else {
+                Toast.makeText(getContext(), "Error al guardar la tarea", Toast.LENGTH_SHORT).show();
+            }
+        }
+        private long convertirFecha(String fecha) {
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            try {
+                Date date = formato.parse(fecha);
+                return date.getTime();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return 0;
+        }
+
+        private void limpiarCampos() {
+            etNombreTarea.setText("");
+            etDescripcionTarea.setText("");
+            etFechaInicio.setText("");
+            etFechaFinal.setText("");
+            spinnerPrioridad.setSelection(0);
+        }
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-    }
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.tareas, container, false);
-    }
-}
 

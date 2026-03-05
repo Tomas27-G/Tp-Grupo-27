@@ -36,6 +36,7 @@
 
             <!-- Título -->
             <TextView
+                android:id="@+id/tvTituloTarea"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -46,6 +47,7 @@
 
             <!-- Nombre -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutNombreTarea"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,6 +55,7 @@
                 android:hint="Nombre de la tarea">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etNombreTarea"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"/>
@@ -60,6 +63,7 @@
 
             <!-- Descripción -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutDescripcionTarea"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,6 +71,7 @@
                 android:hint="Descripción">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etDescripcionTarea"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"/>
@@ -74,6 +79,7 @@
 
             <!-- Fecha inicio -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutFechaInicio"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -81,6 +87,7 @@
                 android:hint="Fecha inicio (DD/MM/AAAA)">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etFechaInicio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="date"/>
@@ -88,6 +95,7 @@
 
             <!-- Fecha final -->
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutFechaFinal"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -95,27 +103,30 @@
                 android:hint="Fecha final (DD/MM/AAAA)">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etFechaFinal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="date"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Prioridad -->
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prioridad"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerPrioridad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:hint="Prioridad">
-
-                <Spinner
-                    android:id="@+id/spinnerPrioridad"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="10dp"/>
 
             <!-- Botón -->
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGuardarTarea"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:backgroundTint="#1976D2"
