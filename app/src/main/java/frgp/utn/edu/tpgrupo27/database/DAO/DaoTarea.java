@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import frgp.utn.edu.tpgrupo27.database.BaseSQLite;
 import frgp.utn.edu.tpgrupo27.entidades.Tarea;
 
@@ -63,6 +66,31 @@ public class DaoTarea {
             }
         }
         return false;
+    }
+
+    public List<Tarea> listarTareas() {
+        List<Tarea> lista = new ArrayList<>();
+        SQLiteDatabase baseDatosApp = baseDeDatos.getReadableDatabase();
+        Cursor cursor = baseDatosApp.rawQuery(
+                "SELECT nombreTarea, descripcionTarea, fechaInicio, fechaFinal, prioridad FROM tareas",
+                null
+        );
+
+        if (cursor.moveToFirst()) {
+            do {
+                Tarea tarea = new Tarea();
+                tarea.setNombreTarea(cursor.getString(0));
+                tarea.setDescripcionTarea(cursor.getString(1));
+                tarea.setFechaInicio(cursor.getLong(2));
+                tarea.setFechaFinal(cursor.getLong(3));
+                tarea.setPrioridad(cursor.getInt(4));
+                lista.add(tarea);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        baseDatosApp.close();
+        return lista;
     }
 
     public boolean modificarTarea (Tarea tarea) {

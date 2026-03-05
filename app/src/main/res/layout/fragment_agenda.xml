@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -6,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_gradient">
 
-    <!-- CARD PRINCIPAL -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardAgenda"
         android:layout_width="0dp"
@@ -26,7 +24,6 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <!-- TITULO -->
             <TextView
                 android:id="@+id/txtAgenda"
                 android:layout_width="wrap_content"
@@ -36,7 +33,6 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="16dp"/>
 
-            <!-- SUBTITULO -->
             <TextView
                 android:id="@+id/txtInfo"
                 android:layout_width="wrap_content"
@@ -46,9 +42,8 @@
                 android:textColor="#666666"
                 android:layout_marginBottom="12dp"/>
 
-            <!-- LISTA AGENDA -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvAgenda"
+            <ListView
+                android:id="@+id/lvAgenda"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
@@ -56,5 +51,4 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
