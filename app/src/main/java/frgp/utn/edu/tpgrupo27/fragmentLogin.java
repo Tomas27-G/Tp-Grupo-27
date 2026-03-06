@@ -34,10 +34,19 @@ public class fragmentLogin extends Fragment {
         BottomNavigationView nav =
                 requireActivity().findViewById(R.id.buttom_navigation);
 
+
         if (nav != null) {
             nav.setVisibility(View.GONE);
         }
+
+        TextView txtBienvenida =
+                requireActivity().findViewById(R.id.txtBienvenida);
+
+        if (txtBienvenida != null) {
+            txtBienvenida.setVisibility(View.GONE);
+        }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
