@@ -2,6 +2,7 @@ package frgp.utn.edu.tpgrupo27;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,17 +17,28 @@ import utils.session;
 
 public class MainActivity extends AppCompatActivity {
 
+    TextView txtBienvenida;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        txtBienvenida = findViewById(R.id.txtBienvenida);
+
         session session = new session(this);
+
+        if(session.estaLogueado()){
+            txtBienvenida.setText("Bienvenido " + session.getNombre());
+        }
+
         BottomNavigationView bottomNavigation =
                 findViewById(R.id.buttom_navigation);
 
@@ -48,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setOnItemSelectedListener(item -> {
 
             Fragment fragment = null;
+
             if (item.getItemId() == R.id.inicio) {
                 fragment = new fragmentInicio();
             }
@@ -74,7 +87,5 @@ public class MainActivity extends AppCompatActivity {
 
             return false;
         });
-
-
     }
 }

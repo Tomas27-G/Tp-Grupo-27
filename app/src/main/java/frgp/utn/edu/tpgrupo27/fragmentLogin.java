@@ -80,7 +80,7 @@ public class fragmentLogin extends Fragment {
 
             // ⭐ GUARDAR SESIÓN
             session session = new session(requireContext());
-            session.crearSesion(usuario.getIdUsuario());
+            session.crearSesion(usuario.getIdUsuario(), usuario.getNombre());
 
             Toast.makeText(requireContext(),
                     "Bienvenido " + usuario.getNombre(),
