@@ -67,12 +67,23 @@ import frgp.utn.edu.tpgrupo27.entidades.Tarea;
             spinnerPrioridad.setAdapter(adapter);
         }
 
+        private boolean contieneNumeros(String texto){
+            return texto.matches(".*\\d.*");
+        }
+
         private void guardarTarea() {
 
             String nombre = etNombreTarea.getText().toString();
             String descripcion = etDescripcionTarea.getText().toString();
             String fechaInicioStr = etFechaInicio.getText().toString();
             String fechaFinalStr = etFechaFinal.getText().toString();
+
+            if(contieneNumeros(nombre) || contieneNumeros(descripcion)){
+                Toast.makeText(getContext(),
+                        "El nombre y la descripción no pueden tener números",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             if(nombre.isEmpty() || descripcion.isEmpty() || fechaInicioStr.isEmpty() || fechaFinalStr.isEmpty()){
                 Toast.makeText(getContext(), "Complete todos los campos", Toast.LENGTH_SHORT).show();
