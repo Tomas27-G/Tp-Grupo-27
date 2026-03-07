@@ -26,7 +26,7 @@ import frgp.utn.edu.tpgrupo27.negocio.negocioHabito;
  */
 public class fragmentHabitos extends Fragment {
 
-    private TextInputEditText nombreHabito, descripHabito, fechaInicioHabito, fechaFinalHabito, horaHabito;
+    private TextInputEditText nombreHabito, descripHabito, fechaInicioHabito;
 
     private Spinner spinnerFrecuencia;   //HAY que ver como funciona
     private MaterialButton botonGuardarHabito;
@@ -59,27 +59,13 @@ public class fragmentHabitos extends Fragment {
         nombreHabito = view.findViewById(R.id.nombreHabito);
         descripHabito = view.findViewById(R.id.descripHabito);
         fechaInicioHabito = view.findViewById(R.id.fechaInicioHabito);
-        fechaFinalHabito = view.findViewById(R.id.fechaFinalHabito);
         spinnerFrecuencia = view.findViewById(R.id.spinnerFrecuencia);
-        horaHabito = view.findViewById(R.id.horaHabito);
         botonGuardarHabito = view.findViewById(R.id.botonGuardarHabito);
-
         botonGuardarHabito.setOnClickListener(v -> guardarHabito());
 
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        listViewHabitos = view.findViewById(R.id.listViewHabitos);
-
-        cargarListaHabitos();  // 👈 LLAMAMOS ACÁ
-
-
-
-
-    }
 
     private Long convertirFecha(String fecha) {
         try {
@@ -97,14 +83,14 @@ public class fragmentHabitos extends Fragment {
         String nombreH = nombreHabito.getText().toString().trim();
         String descripH = descripHabito.getText().toString().trim();
         Long fechaInicioH = convertirFecha(fechaInicioHabito.getText().toString().trim());
-        Long fechaFinalH = convertirFecha(fechaFinalHabito.getText().toString().trim());
-        String horaH = horaHabito.getText().toString().trim();
+
+
 
         int spinnerFrecuenciaH = spinnerFrecuencia.getSelectedItemPosition() + 1;
 
 
         if(nombreH.isEmpty() || descripH.isEmpty()
-                || spinnerFrecuenciaH <= 0 || horaH.isEmpty() ){
+                || spinnerFrecuenciaH <= 0  ){
 
             Toast.makeText(requireContext(),
                     "Completa todos los campos",
@@ -116,9 +102,8 @@ public class fragmentHabitos extends Fragment {
         habito.setNombreHabito(nombreH);
         habito.setDescripcionHabito(descripH);
         habito.setFechaInicio(fechaInicioH);
-        habito.setFechaFinal(fechaFinalH);
         habito.setFrecuencia(spinnerFrecuenciaH);
-        habito.setHora(horaH);
+
 
         negocioHabito negocio = new negocioHabito(requireContext());
         boolean resultado = negocio.crearHabito(habito);
@@ -134,40 +119,6 @@ public class fragmentHabitos extends Fragment {
                     "Error al registrar habito",
                     Toast.LENGTH_SHORT).show();
         }
-    }
-    private String formatearFecha(Long timestamp) {
-
-        java.text.SimpleDateFormat sdf =
-                new java.text.SimpleDateFormat("dd/MM/yyyy",
-                        java.util.Locale.getDefault());
-
-        return sdf.format(new java.util.Date(timestamp));
-    }
-    private void cargarListaHabitos(){
-
-        negocioHabito negocio = new negocioHabito(requireContext());
-        java.util.List<Habito> listaHabitos = negocio.obtenerHabitos();
-
-        java.util.ArrayList<String> listaTexto = new java.util.ArrayList<>();
-
-        for(Habito h : listaHabitos){
-
-            String texto = h.getNombreHabito() + " - "
-                    + formatearFecha(h.getFechaInicio()) + " - "
-                    + formatearFecha(h.getFechaFinal()) + " - "
-                    + h.getHora();
-
-            listaTexto.add(texto);
-        }
-
-        android.widget.ArrayAdapter<String> adapter =
-                new android.widget.ArrayAdapter<>(
-                        requireContext(),
-                        android.R.layout.simple_list_item_1,
-                        listaTexto
-                );
-
-        listViewHabitos.setAdapter(adapter);
     }
 
 

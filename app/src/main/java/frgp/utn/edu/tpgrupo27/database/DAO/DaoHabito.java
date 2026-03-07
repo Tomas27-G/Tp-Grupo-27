@@ -21,9 +21,7 @@ public class DaoHabito {
         if (habito.getNombreHabito() != null && !habito.getNombreHabito().isEmpty() &&
                 habito.getDescripcionHabito() != null && !habito.getDescripcionHabito().isEmpty() &&
                 habito.getFechaInicio() > 0 &&
-                habito.getFechaFinal() > 0 &&
-                habito.getFrecuencia() > 0 &&
-                habito.getHora() != null && !habito.getHora().isEmpty()) {
+                habito.getFrecuencia() > 0 ) {
 
             SQLiteDatabase baseDatosApp = baseDeDatos.getWritableDatabase();
 
@@ -31,9 +29,8 @@ public class DaoHabito {
             registro.put("nombreHabito", habito.getNombreHabito());
             registro.put("descripcionHabito", habito.getDescripcionHabito());
             registro.put("fechaInicio", habito.getFechaInicio());
-            registro.put("fechaFinal", habito.getFechaFinal());
             registro.put("frecuencia", habito.getFrecuencia());
-            registro.put("hora", habito.getHora());
+
 
             baseDatosApp.insert("habitos", null, registro);
 
@@ -51,14 +48,12 @@ public class DaoHabito {
         String nombre = habito.getNombreHabito();
 
         if (!nombre.isEmpty()) {
-            Cursor fila = baseDatosApp.rawQuery("select descripcionHabito,fechaInicio,fechaFinal,frecuencia,hora from habitos where nombreHabito=" + nombre, null);
+            Cursor fila = baseDatosApp.rawQuery("select descripcionHabito,fechaInicio,frecuencia from habitos where nombreHabito=" + nombre, null);
 
             if (fila.moveToFirst()) {
                 habito.setDescripcionHabito(fila.getString(0));
                 habito.setFechaInicio(fila.getLong(1));
-                habito.setFechaFinal(fila.getLong(2));
-                habito.setFrecuencia(fila.getInt(3));
-                habito.setHora(fila.getString(4));
+                habito.setFrecuencia(fila.getInt(2));
 
                 fila.close();
                 baseDatosApp.close();
@@ -91,9 +86,7 @@ public class DaoHabito {
         if (habito.getNombreHabito() != null && !habito.getNombreHabito().isEmpty() &&
                 habito.getDescripcionHabito() != null && !habito.getDescripcionHabito().isEmpty() &&
                 habito.getFechaInicio() > 0 &&
-                habito.getFechaFinal() > 0 &&
-                habito.getFrecuencia() > 0 &&
-                habito.getHora() != null && !habito.getHora().isEmpty()) {
+                habito.getFrecuencia() > 0) {
             return false;
         }
 
@@ -103,9 +96,7 @@ public class DaoHabito {
         registro.put("nombreHabito", habito.getNombreHabito());
         registro.put("descripcionHabito", habito.getDescripcionHabito());
         registro.put("fechaInicio", habito.getFechaInicio());
-        registro.put("fechaFinal", habito.getFechaFinal());
         registro.put("frecuencia", habito.getFrecuencia());
-        registro.put("hora", habito.getHora());
 
         int cantidad = baseDatosApp.update("habitos", registro, "where nombreHabito=" + habito.getNombreHabito(), null);
         baseDatosApp.close();
@@ -124,7 +115,7 @@ public class DaoHabito {
         SQLiteDatabase db = baseDeDatos.getReadableDatabase();
 
         Cursor cursor = db.rawQuery(
-                "SELECT nombreHabito, descripcionHabito, fechaInicio, fechaFinal, frecuencia, hora FROM habitos",
+                "SELECT nombreHabito, descripcionHabito, fechaInicio, frecuencia FROM habitos",
                 null
         );
 
@@ -135,9 +126,7 @@ public class DaoHabito {
                 h.setNombreHabito(cursor.getString(0));
                 h.setDescripcionHabito(cursor.getString(1));
                 h.setFechaInicio(cursor.getLong(2));
-                h.setFechaFinal(cursor.getLong(3));
-                h.setFrecuencia(cursor.getInt(4));
-                h.setHora(cursor.getString(5));
+                h.setFrecuencia(cursor.getInt(3));
 
                 lista.add(h);
 

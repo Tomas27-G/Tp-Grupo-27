@@ -6,9 +6,7 @@ public class Habito {
     private String nombreHabito;
     private String descripcionHabito;
     private long fechaInicio;
-    private long fechaFinal;
     private int frecuencia;
-    private String hora;
 
 
     public Habito() {
@@ -16,27 +14,27 @@ public class Habito {
 
 
     public Habito(String nombreHabito, String descripcionHabito,
-                  long fechaInicio, long fechaFinal,
-                  int frecuencia, String hora) {
+                  long fechaInicio ,
+                  int frecuencia) {
         this.nombreHabito = nombreHabito;
         this.descripcionHabito = descripcionHabito;
         this.fechaInicio = fechaInicio;
-        this.fechaFinal = fechaFinal;
+
         this.frecuencia = frecuencia;
-        this.hora = hora;
+
     }
 
 
     public Habito(int idHabito, String nombreHabito, String descripcionHabito,
-                  long fechaInicio, long fechaFinal,
-                  int frecuencia, String hora) {
+                  long fechaInicio,
+                  int frecuencia) {
         this.idHabito = idHabito;
         this.nombreHabito = nombreHabito;
         this.descripcionHabito = descripcionHabito;
         this.fechaInicio = fechaInicio;
-        this.fechaFinal = fechaFinal;
+
         this.frecuencia = frecuencia;
-        this.hora = hora;
+
     }
 
 
@@ -73,13 +71,8 @@ public class Habito {
         this.fechaInicio = fechaInicio;
     }
 
-    public long getFechaFinal() {
-        return fechaFinal;
-    }
 
-    public void setFechaFinal(long fechaFinal) {
-        this.fechaFinal = fechaFinal;
-    }
+
 
     public int getFrecuencia() {
         return frecuencia;
@@ -89,11 +82,5 @@ public class Habito {
         this.frecuencia = frecuencia;
     }
 
-    public String getHora() {
-        return hora;
-    }
 
-    public void setHora(String hora) {
-        this.hora = hora;
-    }
 }

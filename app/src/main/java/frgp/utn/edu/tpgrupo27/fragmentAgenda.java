@@ -1,6 +1,9 @@
 package frgp.utn.edu.tpgrupo27;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +18,15 @@ import java.util.List;
 import java.util.Locale;
 
 import frgp.utn.edu.tpgrupo27.database.DAO.DaoTarea;
+import frgp.utn.edu.tpgrupo27.entidades.Habito;
 import frgp.utn.edu.tpgrupo27.entidades.Tarea;
+import frgp.utn.edu.tpgrupo27.negocio.negocioHabito;
 
 public class fragmentAgenda extends Fragment {
 
     private ListView lvTareas;
+
+    private ListView listViewHabitos;
     private DaoTarea daoTarea;
 
     public fragmentAgenda() {}
@@ -36,6 +43,18 @@ public class fragmentAgenda extends Fragment {
 
         return view;
     }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        listViewHabitos = view.findViewById(R.id.listViewHabitos);
+
+        cargarListaHabitos();
+
+
+
+
+    }
+
 
     private void mostrarTareas() {
         List<Tarea> lista = daoTarea.listarTareas();
@@ -65,5 +84,40 @@ public class fragmentAgenda extends Fragment {
         );
 
         lvTareas.setAdapter(adapter);
+    }
+
+    private String formatearFecha(Long timestamp) {
+
+        java.text.SimpleDateFormat sdf =
+                new java.text.SimpleDateFormat("dd/MM/yyyy",
+                        java.util.Locale.getDefault());
+
+        return sdf.format(new java.util.Date(timestamp));
+    }
+    private void cargarListaHabitos(){
+
+        negocioHabito negocio = new negocioHabito(requireContext());
+        java.util.List<Habito> listaHabitos = negocio.obtenerHabitos();
+
+        java.util.ArrayList<String> listaTexto = new java.util.ArrayList<>();
+
+        for(Habito h : listaHabitos){
+
+            String texto = h.getNombreHabito() + " - "
+                    + formatearFecha(h.getFechaInicio()) + " - "
+                    + h.getFrecuencia();
+
+
+            listaTexto.add(texto);
+        }
+
+        android.widget.ArrayAdapter<String> adapter =
+                new android.widget.ArrayAdapter<>(
+                        requireContext(),
+                        android.R.layout.simple_list_item_1,
+                        listaTexto
+                );
+
+        listViewHabitos.setAdapter(adapter);
     }
 }

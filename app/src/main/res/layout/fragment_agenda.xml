@@ -80,6 +80,16 @@
                     android:divider="@android:color/darker_gray"
                     android:dividerHeight="1dp"/>
 
+
+
+
+                <ListView
+                    android:id="@+id/listViewHabitos"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:dividerHeight="8dp"/>
+
             </LinearLayout>
 
         </ScrollView>
