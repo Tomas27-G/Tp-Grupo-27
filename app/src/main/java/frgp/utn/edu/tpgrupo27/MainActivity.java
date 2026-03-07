@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(session.estaLogueado()){
             txtBienvenida.setText("Bienvenido " + session.getNombre());
+            txtBienvenida.setVisibility(View.GONE);
         }
 
         BottomNavigationView bottomNavigation =

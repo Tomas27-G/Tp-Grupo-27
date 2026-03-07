@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 import utils.session;
@@ -23,7 +24,17 @@ public class fragmentInicio extends Fragment {
     public fragmentInicio() {
         // Required empty public constructor
     }
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        TextView txtBienvenida =
+                requireActivity().findViewById(R.id.txtBienvenida);
+
+        if (txtBienvenida != null) {
+            txtBienvenida.setVisibility(View.VISIBLE);
+        }
+    }
 
     public static fragmentInicio newInstance(String param1, String param2) {
         fragmentInicio fragment = new fragmentInicio();

@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -35,6 +37,19 @@ import frgp.utn.edu.tpgrupo27.entidades.Tarea;
         public fragmentTareas() {
             // Required empty public constructor
         }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+
+            TextView txtBienvenida =
+                    requireActivity().findViewById(R.id.txtBienvenida);
+
+            if (txtBienvenida != null) {
+                txtBienvenida.setVisibility(View.GONE);
+            }
+        }
+
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
