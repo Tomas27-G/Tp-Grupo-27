@@ -19,6 +19,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import frgp.utn.edu.tpgrupo27.database.DAO.DaoUsuario;
 import frgp.utn.edu.tpgrupo27.entidades.Usuario;
+import frgp.utn.edu.tpgrupo27.negocio.negocioUsuario;
 import utils.session;
 
 public class fragmentLogin extends Fragment {
@@ -82,8 +83,9 @@ public class fragmentLogin extends Fragment {
         String mail = etEmail.getText().toString().trim();
         String pass = etPassword.getText().toString().trim();
 
-        DaoUsuario dao = new DaoUsuario(requireContext());
-        Usuario usuario = dao.loginUsuario(mail, pass);
+        negocioUsuario negocio = new negocioUsuario(requireContext());
+
+        Usuario usuario = negocio.loguearseUsuario(mail, pass);
 
         if(usuario != null){
 

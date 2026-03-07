@@ -16,6 +16,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import frgp.utn.edu.tpgrupo27.database.DAO.DaoUsuario;
 import frgp.utn.edu.tpgrupo27.entidades.Usuario;
+import frgp.utn.edu.tpgrupo27.negocio.negocioUsuario;
 import utils.session;
 
 public class fragmentRegistro extends Fragment {
@@ -81,9 +82,9 @@ public class fragmentRegistro extends Fragment {
         usuario.setContrasena(pass);
         usuario.setFechaNacimiento(edad); // usás edad como fecha
 
-        DaoUsuario dao = new DaoUsuario(requireContext());
+        negocioUsuario negocio = new negocioUsuario(requireContext());
 
-        boolean resultado = dao.altaUsuario(usuario);
+        boolean resultado = negocio.crearUsuario(usuario);
 
         if(resultado){
 
