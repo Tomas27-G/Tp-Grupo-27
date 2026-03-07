@@ -74,9 +74,6 @@ public class MainActivity extends AppCompatActivity {
             if (item.getItemId() == R.id.agenda) {
                 fragment = new fragmentAgenda();
             }
-            if (item.getItemId() == R.id.stats) {
-                fragment = new fragmentEstadistica();
-            }
 
             if (fragment != null) {
                 getSupportFragmentManager()

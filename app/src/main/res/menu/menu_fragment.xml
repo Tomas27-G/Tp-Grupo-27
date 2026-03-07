@@ -20,8 +20,4 @@
         android:icon="@drawable/agenda"
         android:title="Agenda" />
 
-    <item
-        android:id="@+id/stats"
-        android:icon="@drawable/stats"
-        android:title="Estadisticas" />
 </menu>
