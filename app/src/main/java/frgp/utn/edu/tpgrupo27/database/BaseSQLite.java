@@ -12,9 +12,9 @@ public class BaseSQLite extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase BaseDeDatos) {
-        BaseDeDatos.execSQL("CREATE TABLE tareas(idTarea INTEGER PRIMARY KEY AUTOINCREMENT, nombreTarea TEXT, descripcionTarea TEXT, fechaInicio INTEGER, fechaFinal INTEGER, prioridad INT)");
+        BaseDeDatos.execSQL("CREATE TABLE tareas(idTarea INTEGER PRIMARY KEY AUTOINCREMENT, nombreTarea TEXT, descripcionTarea TEXT, fechaInicio INTEGER, fechaFinal INTEGER, prioridad INT,checkeado INTEGER DEFAULT 0)");
 
-        BaseDeDatos.execSQL("CREATE TABLE habitos(idHabito INTEGER PRIMARY KEY AUTOINCREMENT, nombreHabito TEXT, descripcionHabito TEXT, fechaInicio INTEGER, fechaFinal INTEGER, frecuencia INT, hora TEXT)");
+        BaseDeDatos.execSQL("CREATE TABLE habitos(idHabito INTEGER PRIMARY KEY AUTOINCREMENT, nombreHabito TEXT, descripcionHabito TEXT, fechaInicio INTEGER, frecuencia INT,checkeado INTEGER DEFAULT 0)");
 
         BaseDeDatos.execSQL("CREATE TABLE usuarios(idUsuario INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, apellido TEXT, contrasena TEXT, mail TEXT, fechaNacimiento TEXT)");
     }

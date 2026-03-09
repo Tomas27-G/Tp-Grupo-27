@@ -8,6 +8,8 @@ public class Habito {
     private long fechaInicio;
     private int frecuencia;
 
+    private boolean checkeado;
+
 
     public Habito() {
     }
@@ -15,25 +17,14 @@ public class Habito {
 
     public Habito(String nombreHabito, String descripcionHabito,
                   long fechaInicio ,
-                  int frecuencia) {
+                  int frecuencia,boolean checkeado) {
         this.nombreHabito = nombreHabito;
         this.descripcionHabito = descripcionHabito;
         this.fechaInicio = fechaInicio;
 
         this.frecuencia = frecuencia;
 
-    }
-
-
-    public Habito(int idHabito, String nombreHabito, String descripcionHabito,
-                  long fechaInicio,
-                  int frecuencia) {
-        this.idHabito = idHabito;
-        this.nombreHabito = nombreHabito;
-        this.descripcionHabito = descripcionHabito;
-        this.fechaInicio = fechaInicio;
-
-        this.frecuencia = frecuencia;
+        this.checkeado=checkeado;
 
     }
 
@@ -72,8 +63,6 @@ public class Habito {
     }
 
 
-
-
     public int getFrecuencia() {
         return frecuencia;
     }
@@ -81,6 +70,10 @@ public class Habito {
     public void setFrecuencia(int frecuencia) {
         this.frecuencia = frecuencia;
     }
+
+    public boolean getCheckeado() { return checkeado;}
+
+    public void setCheckeado(boolean checkeado){ this.checkeado=checkeado;}
 
 
 }

@@ -35,4 +35,8 @@ public class negocioTarea {
         return daoTarea.bajaTarea(tarea);
     }
 
+    public boolean actualizarCheckeado(int idTarea, boolean estado){
+        return daoTarea.actualizarCheckeado(idTarea, estado);
+    }
+
 }

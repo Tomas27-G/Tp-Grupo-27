@@ -32,6 +32,7 @@ public class DaoHabito {
             registro.put("descripcionHabito", habito.getDescripcionHabito());
             registro.put("fechaInicio", habito.getFechaInicio());
             registro.put("frecuencia", habito.getFrecuencia());
+            registro.put("checkeado", habito.getCheckeado() ? 1 : 0);
 
             long resultado = baseDatosApp.insert("habitos", null, registro);
 
@@ -42,17 +43,21 @@ public class DaoHabito {
     }
 
     public boolean consultaHabito(Habito habito) {
-        SQLiteDatabase baseDatosApp = baseDeDatos.getWritableDatabase();
+        SQLiteDatabase baseDatosApp = baseDeDatos.getReadableDatabase();
 
-        String nombre = habito.getNombreHabito();
+        int id = habito.getIdHabito();
 
-        if (nombre != null && !nombre.isEmpty()) {
-            Cursor fila = baseDatosApp.rawQuery("SELECT descripcionHabito, fechaInicio, frecuencia FROM habitos WHERE nombreHabito = ?", new String[]{nombre});
+        if ( id >0 ) {
+            Cursor fila = baseDatosApp.rawQuery(
+                    "SELECT descripcionHabito, fechaInicio, frecuencia, checkeado FROM habitos WHERE idHabito = ?",
+                    new String[]{String.valueOf(habito.getIdHabito())}
+            );
 
             if (fila.moveToFirst()) {
                 habito.setDescripcionHabito(fila.getString(0));
                 habito.setFechaInicio(fila.getLong(1));
                 habito.setFrecuencia(fila.getInt(2));
+                habito.setCheckeado(fila.getInt(3) == 1);
 
                 fila.close();
                 baseDatosApp.close();
@@ -65,14 +70,22 @@ public class DaoHabito {
     }
 
     public boolean bajaHabito(Habito habito) {
-        SQLiteDatabase baseDatosApp = baseDeDatos.getWritableDatabase();
-        String nombre = habito.getNombreHabito();
 
-        if (nombre != null && !nombre.isEmpty()) {
-            int cantidad = baseDatosApp.delete("habitos", "nombreHabito = ?", new String[]{nombre});
+        SQLiteDatabase baseDatosApp = baseDeDatos.getWritableDatabase();
+
+        int id = habito.getIdHabito();
+
+        if(id > 0){
+            int cantidad = baseDatosApp.delete(
+                    "habitos",
+                    "idHabito = ?",
+                    new String[]{String.valueOf(id)}
+            );
+
             baseDatosApp.close();
             return cantidad == 1;
         }
+
         baseDatosApp.close();
         return false;
     }
@@ -93,13 +106,31 @@ public class DaoHabito {
         registro.put("descripcionHabito", habitoModificado.getDescripcionHabito());
         registro.put("fechaInicio", habitoModificado.getFechaInicio());
         registro.put("frecuencia", habitoModificado.getFrecuencia());
+        registro.put("checkeado", habitoModificado.getCheckeado() ? 1 : 0);
 
         int cantidad = baseDatosApp.update("habitos", registro, "nombreHabito = ?", new String[]{nombreOriginal});
         baseDatosApp.close();
 
         return cantidad > 0;
     }
+    public boolean actualizarCheckeado(int id, boolean estado){
 
+        SQLiteDatabase db = baseDeDatos.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("checkeado", estado ? 1 : 0);
+
+        int filas = db.update(
+                "habitos",
+                values,
+                "idHabito = ?",
+                new String[]{String.valueOf(id)}
+        );
+
+        db.close();
+
+        return filas > 0;
+    }
     public List<Habito> listaDeHabitos() {
 
         List<Habito> lista = new ArrayList<>();
@@ -107,25 +138,31 @@ public class DaoHabito {
         SQLiteDatabase db = baseDeDatos.getReadableDatabase();
 
         Cursor cursor = db.rawQuery(
-                "SELECT nombreHabito, descripcionHabito, fechaInicio, frecuencia FROM habitos",
+                "SELECT idHabito, nombreHabito, descripcionHabito, fechaInicio, frecuencia, checkeado FROM habitos",
                 null
         );
 
-        if(cursor.moveToFirst()){
-            do{
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+
                 Habito h = new Habito();
 
-                h.setNombreHabito(cursor.getString(0));
-                h.setDescripcionHabito(cursor.getString(1));
-                h.setFechaInicio(cursor.getLong(2));
-                h.setFrecuencia(cursor.getInt(3));
+                h.setIdHabito(cursor.getInt(0));
+                h.setNombreHabito(cursor.getString(1));
+                h.setDescripcionHabito(cursor.getString(2));
+                h.setFechaInicio(cursor.getLong(3));
+                h.setFrecuencia(cursor.getInt(4));
+                h.setCheckeado(cursor.getInt(5) == 1);
 
                 lista.add(h);
 
-            }while(cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
 
-        cursor.close();
+        if(cursor != null){
+            cursor.close();
+        }
+
         db.close();
 
         return lista;

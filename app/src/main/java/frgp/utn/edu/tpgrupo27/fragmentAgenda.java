@@ -1,5 +1,5 @@
 package frgp.utn.edu.tpgrupo27;
-
+import android.graphics.Paint;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -40,18 +40,31 @@ public class fragmentAgenda extends Fragment {
     }
 
     private void mostrarTareas() {
+
         negocioTarea negocio = new negocioTarea(requireContext());
+
         List<Tarea> listaTareas = negocio.listarTareas();
+
+        if(listaTareas == null){
+            listaTareas = new ArrayList<>();
+        }
+
         tareaAdapter adapter = new tareaAdapter(requireContext(), listaTareas);
+
         lvTareas.setAdapter(adapter);
     }
-
     private void mostrarHabitos() {
+
         negocioHabito negocio = new negocioHabito(requireContext());
+
         List<Habito> listaHabitos = negocio.obtenerHabitos();
-        if (listaHabitos == null) listaHabitos = new ArrayList<>();
+
+        if (listaHabitos == null) {
+            listaHabitos = new ArrayList<>();
+        }
 
         habitoAdapter adapter = new habitoAdapter(requireContext(), listaHabitos);
+
         lvHabitos.setAdapter(adapter);
     }
 }

@@ -30,4 +30,8 @@ public class negocioHabito {
     public boolean modificarHabito(String nombreOriginal, Habito habitoModificado) {
         return daoHabito.modificarHabito(nombreOriginal, habitoModificado);
     }
+    public boolean actualizarCheckeado(int idHabito, boolean estado){
+        return daoHabito.actualizarCheckeado(idHabito, estado);
+    }
+
 }

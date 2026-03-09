@@ -1,6 +1,7 @@
 package frgp.utn.edu.tpgrupo27.adapters;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,42 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
 
         fechas.setText("Inicio: " + inicio + " | Fin: " + fin);
 
+        // CHECKBOX ESTADO
+        check.setOnCheckedChangeListener(null);
+        check.setChecked(tarea.getCheckeado());
+
+        if(tarea.getCheckeado()){
+            nombre.setTextColor(context.getResources().getColor(android.R.color.holo_green_dark));
+            nombre.setPaintFlags(nombre.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }else{
+            nombre.setTextColor(context.getResources().getColor(android.R.color.black));
+            nombre.setPaintFlags(nombre.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+        }
+
+        check.setOnCheckedChangeListener((buttonView, isChecked) -> {
+
+            tarea.setCheckeado(isChecked);
+
+            negocioTarea negocio = new negocioTarea(context);
+            boolean resultado = negocio.actualizarCheckeado(tarea.getIdTarea(), isChecked);
+
+            if(resultado){
+
+                if(isChecked){
+                    nombre.setTextColor(context.getResources().getColor(android.R.color.holo_green_dark));
+                    nombre.setPaintFlags(nombre.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    Toast.makeText(context,"Tarea completada",Toast.LENGTH_SHORT).show();
+                }else{
+                    nombre.setTextColor(context.getResources().getColor(android.R.color.black));
+                    nombre.setPaintFlags(nombre.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                }
+
+            }else{
+                Toast.makeText(context,"Error al actualizar estado",Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
         // BOTÓN ELIMINAR
         btnEliminar.setOnClickListener(v -> {
 
@@ -88,6 +125,7 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
 
             LinearLayout layout = new LinearLayout(context);
             layout.setOrientation(LinearLayout.VERTICAL);
+
             int padding = (int) (16 * context.getResources().getDisplayMetrics().density);
             layout.setPadding(padding,padding,padding,padding);
 
@@ -116,6 +154,7 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
                         String nuevaFin = etFin.getText().toString().trim();
 
                         long fechaInicioLong, fechaFinLong;
+
                         try {
                             fechaInicioLong = formato.parse(nuevaInicio).getTime();
                             fechaFinLong = formato.parse(nuevaFin).getTime();
@@ -134,7 +173,7 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
                         if(resultado){
                             notifyDataSetChanged();
                             Toast.makeText(context, "Tarea modificada", Toast.LENGTH_SHORT).show();
-                        } else {
+                        }else{
                             Toast.makeText(context, "Error al modificar tarea", Toast.LENGTH_SHORT).show();
                         }
 
