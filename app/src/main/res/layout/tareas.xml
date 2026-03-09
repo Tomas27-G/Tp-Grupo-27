@@ -75,13 +75,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:hint="Fecha inicio (DD/MM/AAAA)">
+            android:hint="Fecha inicio">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etFechaInicio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="date"/>
+                android:focusable="false"
+                android:clickable="true"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Fecha final -->
@@ -91,13 +92,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:hint="Fecha final (DD/MM/AAAA)">
+            android:hint="Fecha final">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etFechaFinal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="date"/>
+                android:focusable="false"
+                android:clickable="true"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Prioridad -->

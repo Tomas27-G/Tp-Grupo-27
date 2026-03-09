@@ -1,5 +1,6 @@
 package frgp.utn.edu.tpgrupo27;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,14 +17,13 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Calendar;
+import java.util.Locale;
+
 import frgp.utn.edu.tpgrupo27.entidades.Habito;
 import frgp.utn.edu.tpgrupo27.negocio.negocioHabito;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link fragmentHabitos#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class fragmentHabitos extends Fragment {
 
     private TextInputEditText nombreHabito, descripHabito, fechaInicioHabito;
@@ -34,6 +34,33 @@ public class fragmentHabitos extends Fragment {
 
     public fragmentHabitos() {
         // Required empty public constructor
+    }
+
+    private void mostrarDatePicker(TextInputEditText editText){
+
+        Calendar calendar = Calendar.getInstance();
+
+        int anio = calendar.get(Calendar.YEAR);
+        int mes = calendar.get(Calendar.MONTH);
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                requireContext(),
+                (view, year, month, dayOfMonth) -> {
+
+                    month = month + 1;
+
+                    String fecha = String.format(Locale.getDefault(),
+                            "%02d/%02d/%04d", dayOfMonth, month, year);
+
+                    editText.setText(fecha);
+                },
+                anio, mes, dia
+        );
+
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+
+        datePickerDialog.show();
     }
 
 
@@ -59,6 +86,11 @@ public class fragmentHabitos extends Fragment {
         nombreHabito = view.findViewById(R.id.nombreHabito);
         descripHabito = view.findViewById(R.id.descripHabito);
         fechaInicioHabito = view.findViewById(R.id.fechaInicioHabito);
+
+        fechaInicioHabito = view.findViewById(R.id.fechaInicioHabito);
+
+        fechaInicioHabito.setOnClickListener(v -> mostrarDatePicker(fechaInicioHabito));
+
         spinnerFrecuencia = view.findViewById(R.id.spinnerFrecuencia);
         botonGuardarHabito = view.findViewById(R.id.botonGuardarHabito);
         botonGuardarHabito.setOnClickListener(v -> guardarHabito());

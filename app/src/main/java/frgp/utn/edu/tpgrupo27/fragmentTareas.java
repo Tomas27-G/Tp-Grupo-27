@@ -1,5 +1,6 @@
 package frgp.utn.edu.tpgrupo27;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
@@ -17,6 +18,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -52,6 +54,34 @@ public class fragmentTareas extends Fragment {
             }
         }
 
+    private void mostrarDatePicker(TextInputEditText editText){
+
+        Calendar calendar = Calendar.getInstance();
+
+        int anio = calendar.get(Calendar.YEAR);
+        int mes = calendar.get(Calendar.MONTH);
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                requireContext(),
+                (view, year, month, dayOfMonth) -> {
+
+                    month = month + 1;
+
+                    String fecha = String.format(Locale.getDefault(),
+                            "%02d/%02d/%04d", dayOfMonth, month, year);
+
+                    editText.setText(fecha);
+                },
+                anio, mes, dia
+        );
+
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+
+        datePickerDialog.show();
+    }
+
+
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,6 +94,8 @@ public class fragmentTareas extends Fragment {
             etFechaInicio = view.findViewById(R.id.etFechaInicio);
             etFechaFinal = view.findViewById(R.id.etFechaFinal);
             spinnerPrioridad = view.findViewById(R.id.spinnerPrioridad);
+            etFechaInicio.setOnClickListener(v -> mostrarDatePicker(etFechaInicio));
+            etFechaFinal.setOnClickListener(v -> mostrarDatePicker(etFechaFinal));
             cargarSpinnerPrioridad();
             btnGuardar = view.findViewById(R.id.btnGuardarTarea);
 
@@ -95,6 +127,8 @@ public class fragmentTareas extends Fragment {
             String fechaInicioStr = etFechaInicio.getText().toString();
             String fechaFinalStr = etFechaFinal.getText().toString();
 
+
+
             if(contieneNumeros(nombre) || contieneNumeros(descripcion)){
                 Toast.makeText(getContext(),
                         "El nombre y la descripción no pueden tener números",
@@ -114,6 +148,13 @@ public class fragmentTareas extends Fragment {
 
             if(fechaInicio == 0 || fechaFinal == 0){
                 Toast.makeText(getContext(), "Formato de fecha incorrecto (dd/MM/yyyy)", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if(fechaFinal < fechaInicio){
+                Toast.makeText(getContext(),
+                        "La fecha final no puede ser menor que la fecha de inicio",
+                        Toast.LENGTH_SHORT).show();
                 return;
             }
 
