@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
-import frgp.utn.edu.tpgrupo27.database.DAO.DaoUsuario;
+import android.util.Patterns;
 import frgp.utn.edu.tpgrupo27.entidades.Usuario;
 import frgp.utn.edu.tpgrupo27.negocio.negocioUsuario;
 import utils.session;
@@ -74,6 +74,24 @@ public class fragmentRegistro extends Fragment {
                     Toast.LENGTH_SHORT).show();
             return;
         }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            etEmail.setError("Ingrese un correo válido");
+            return;
+        }else{
+            etEmail.setError(null);
+        }
+
+        String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$";
+
+        if (!pass.matches(passwordPattern)) {
+            etPassword.setError("Contraseña débil: Debe tener al menos 8 caracteres, una mayúscula, un número y un carácter especial");
+            return;
+        } else {
+            etPassword.setError(null);
+        }
+
+
+
 
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
