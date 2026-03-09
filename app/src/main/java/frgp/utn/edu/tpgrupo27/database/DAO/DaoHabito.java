@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import frgp.utn.edu.tpgrupo27.database.BaseSQLite;
 import frgp.utn.edu.tpgrupo27.entidades.Habito;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DaoHabito {
 
     private BaseSQLite baseDeDatos;
@@ -17,7 +20,6 @@ public class DaoHabito {
     }
 
     public boolean altaHabito(Habito habito) {
-
         if (habito.getNombreHabito() != null && !habito.getNombreHabito().isEmpty() &&
                 habito.getDescripcionHabito() != null && !habito.getDescripcionHabito().isEmpty() &&
                 habito.getFechaInicio() > 0 &&
@@ -31,14 +33,11 @@ public class DaoHabito {
             registro.put("fechaInicio", habito.getFechaInicio());
             registro.put("frecuencia", habito.getFrecuencia());
 
-
-            baseDatosApp.insert("habitos", null, registro);
+            long resultado = baseDatosApp.insert("habitos", null, registro);
 
             baseDatosApp.close();
-            return true;
+            return resultado != -1;
         }
-
-
         return false;
     }
 
@@ -47,8 +46,8 @@ public class DaoHabito {
 
         String nombre = habito.getNombreHabito();
 
-        if (!nombre.isEmpty()) {
-            Cursor fila = baseDatosApp.rawQuery("select descripcionHabito,fechaInicio,frecuencia from habitos where nombreHabito=" + nombre, null);
+        if (nombre != null && !nombre.isEmpty()) {
+            Cursor fila = baseDatosApp.rawQuery("SELECT descripcionHabito, fechaInicio, frecuencia FROM habitos WHERE nombreHabito = ?", new String[]{nombre});
 
             if (fila.moveToFirst()) {
                 habito.setDescripcionHabito(fila.getString(0));
@@ -59,9 +58,9 @@ public class DaoHabito {
                 baseDatosApp.close();
                 return true;
             }
-        } else {
-            return false;
+            fila.close();
         }
+        baseDatosApp.close();
         return false;
     }
 
@@ -69,48 +68,41 @@ public class DaoHabito {
         SQLiteDatabase baseDatosApp = baseDeDatos.getWritableDatabase();
         String nombre = habito.getNombreHabito();
 
-        if (!nombre.isEmpty()) {
-            int cantidad = baseDatosApp.delete("habitos", "nombreHabito=" + nombre, null);
+        if (nombre != null && !nombre.isEmpty()) {
+            int cantidad = baseDatosApp.delete("habitos", "nombreHabito = ?", new String[]{nombre});
             baseDatosApp.close();
-            if (cantidad == 1) {
-                return true;
-            }
-        } else {
-            return false;
+            return cantidad == 1;
         }
+        baseDatosApp.close();
         return false;
     }
 
-    public boolean modificarHabito(Habito habito) {
+    public boolean modificarHabito(String nombreOriginal, Habito habitoModificado) {
 
-        if (habito.getNombreHabito() != null && !habito.getNombreHabito().isEmpty() &&
-                habito.getDescripcionHabito() != null && !habito.getDescripcionHabito().isEmpty() &&
-                habito.getFechaInicio() > 0 &&
-                habito.getFrecuencia() > 0) {
+        if (habitoModificado.getNombreHabito() == null || habitoModificado.getNombreHabito().isEmpty() ||
+                habitoModificado.getDescripcionHabito() == null || habitoModificado.getDescripcionHabito().isEmpty() ||
+                habitoModificado.getFechaInicio() <= 0 ||
+                habitoModificado.getFrecuencia() <= 0) {
             return false;
         }
 
         SQLiteDatabase baseDatosApp = baseDeDatos.getWritableDatabase();
 
         ContentValues registro = new ContentValues();
-        registro.put("nombreHabito", habito.getNombreHabito());
-        registro.put("descripcionHabito", habito.getDescripcionHabito());
-        registro.put("fechaInicio", habito.getFechaInicio());
-        registro.put("frecuencia", habito.getFrecuencia());
+        registro.put("nombreHabito", habitoModificado.getNombreHabito());
+        registro.put("descripcionHabito", habitoModificado.getDescripcionHabito());
+        registro.put("fechaInicio", habitoModificado.getFechaInicio());
+        registro.put("frecuencia", habitoModificado.getFrecuencia());
 
-        int cantidad = baseDatosApp.update("habitos", registro, "where nombreHabito=" + habito.getNombreHabito(), null);
+        int cantidad = baseDatosApp.update("habitos", registro, "nombreHabito = ?", new String[]{nombreOriginal});
         baseDatosApp.close();
-        if (cantidad > 0) {
-            return true;
-        }else{
-            return false;
-        }
 
+        return cantidad > 0;
     }
 
-    public java.util.List<Habito> listaDeHabitos(){
+    public List<Habito> listaDeHabitos() {
 
-        java.util.List<Habito> lista = new java.util.ArrayList<>();
+        List<Habito> lista = new ArrayList<>();
 
         SQLiteDatabase db = baseDeDatos.getReadableDatabase();
 

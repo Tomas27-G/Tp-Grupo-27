@@ -2,10 +2,13 @@ package frgp.utn.edu.tpgrupo27.negocio;
 
 import android.content.Context;
 
+import java.util.List;
+
 import frgp.utn.edu.tpgrupo27.database.DAO.DaoHabito;
 import frgp.utn.edu.tpgrupo27.entidades.Habito;
 
 public class negocioHabito {
+
     private DaoHabito daoHabito;
 
     public negocioHabito(Context context){
@@ -13,13 +16,18 @@ public class negocioHabito {
     }
 
     public boolean crearHabito(Habito habito){
-
         return daoHabito.altaHabito(habito);
     }
 
-    public java.util.List<Habito> obtenerHabitos(){
-
+    public List<Habito> obtenerHabitos(){
         return daoHabito.listaDeHabitos();
     }
 
+    public boolean borrarHabito(Habito habito){
+        return daoHabito.bajaHabito(habito);
+    }
+
+    public boolean modificarHabito(String nombreOriginal, Habito habitoModificado) {
+        return daoHabito.modificarHabito(nombreOriginal, habitoModificado);
+    }
 }

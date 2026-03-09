@@ -12,31 +12,33 @@ import frgp.utn.edu.tpgrupo27.database.BaseSQLite;
 import frgp.utn.edu.tpgrupo27.entidades.Tarea;
 
 public class DaoTarea {
+
     private BaseSQLite baseDeDatos;
 
-    public DaoTarea (Context context){
+    public DaoTarea(Context context){
         baseDeDatos = new BaseSQLite(context,"baseDeDatosAPP",null,1);
     }
 
-    public boolean altaTarea (Tarea tarea){
+    public boolean altaTarea(Tarea tarea){
+
         if (tarea.getNombreTarea() != null && !tarea.getNombreTarea().isEmpty() &&
                 tarea.getDescripcionTarea() != null && !tarea.getDescripcionTarea().isEmpty() &&
                 tarea.getFechaInicio() > 0 &&
                 tarea.getFechaFinal() > 0 &&
                 tarea.getPrioridad() > 0){
 
-            SQLiteDatabase baseDatosApp = baseDeDatos.getWritableDatabase();
+            SQLiteDatabase db = baseDeDatos.getWritableDatabase();
 
-            ContentValues registrar = new ContentValues();
-            registrar.put("nombreTarea", tarea.getNombreTarea());
-            registrar.put("descripcionTarea", tarea.getDescripcionTarea());
-            registrar.put("fechaInicio", tarea.getFechaInicio());
-            registrar.put("fechaFinal", tarea.getFechaFinal());
-            registrar.put("prioridad", tarea.getPrioridad());
+            ContentValues values = new ContentValues();
+            values.put("nombreTarea", tarea.getNombreTarea());
+            values.put("descripcionTarea", tarea.getDescripcionTarea());
+            values.put("fechaInicio", tarea.getFechaInicio());
+            values.put("fechaFinal", tarea.getFechaFinal());
+            values.put("prioridad", tarea.getPrioridad());
 
-            long resultado = baseDatosApp.insert("tareas", null, registrar);
+            long resultado = db.insert("tareas", null, values);
 
-            baseDatosApp.close();
+            db.close();
 
             return resultado != -1;
         }
@@ -44,99 +46,99 @@ public class DaoTarea {
         return false;
     }
 
-    public boolean buscarTarea (Tarea tarea){
-        SQLiteDatabase baseDatosApp = baseDeDatos.getWritableDatabase();
-        if(tarea.getNombreTarea()!= null){
-            Cursor fila = baseDatosApp.rawQuery(
-                    "SELECT nombreTarea, descripcionTarea, fechaInicio, fechaFinal, prioridad " +
-                            "FROM tareas WHERE nombreTarea = ?",
-                    new String[]{tarea.getNombreTarea()}
-            );
-            if (fila.moveToFirst()){
-                tarea.setDescripcionTarea(fila.getString(0));
-                tarea.setFechaInicio(fila.getLong(1));
-                tarea.setFechaFinal(fila.getLong(2));
-                tarea.setPrioridad(fila.getInt(3));
+    public boolean buscarTarea(Tarea tarea){
 
-                fila.close();
-                baseDatosApp.close();
-                return true;
-            }else {
-                return false;
-            }
+        SQLiteDatabase db = baseDeDatos.getReadableDatabase();
+
+        Cursor fila = db.rawQuery(
+                "SELECT nombreTarea, descripcionTarea, fechaInicio, fechaFinal, prioridad FROM tareas WHERE nombreTarea = ?",
+                new String[]{tarea.getNombreTarea()}
+        );
+
+        if (fila.moveToFirst()){
+
+            tarea.setNombreTarea(fila.getString(0));
+            tarea.setDescripcionTarea(fila.getString(1));
+            tarea.setFechaInicio(fila.getLong(2));
+            tarea.setFechaFinal(fila.getLong(3));
+            tarea.setPrioridad(fila.getInt(4));
+
+            fila.close();
+            db.close();
+            return true;
         }
+
+        fila.close();
+        db.close();
         return false;
     }
 
-    public List<Tarea> listarTareas() {
+    public List<Tarea> listarTareas(){
+
         List<Tarea> lista = new ArrayList<>();
-        SQLiteDatabase baseDatosApp = baseDeDatos.getReadableDatabase();
-        Cursor cursor = baseDatosApp.rawQuery(
+
+        SQLiteDatabase db = baseDeDatos.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
                 "SELECT nombreTarea, descripcionTarea, fechaInicio, fechaFinal, prioridad FROM tareas",
                 null
         );
 
-        if (cursor.moveToFirst()) {
-            do {
+        if (cursor.moveToFirst()){
+            do{
                 Tarea tarea = new Tarea();
+
                 tarea.setNombreTarea(cursor.getString(0));
                 tarea.setDescripcionTarea(cursor.getString(1));
                 tarea.setFechaInicio(cursor.getLong(2));
                 tarea.setFechaFinal(cursor.getLong(3));
                 tarea.setPrioridad(cursor.getInt(4));
+
                 lista.add(tarea);
-            } while (cursor.moveToNext());
+
+            }while(cursor.moveToNext());
         }
 
         cursor.close();
-        baseDatosApp.close();
+        db.close();
+
         return lista;
     }
 
-    public boolean modificarTarea (Tarea tarea) {
-        if (tarea.getNombreTarea() != null && !tarea.getNombreTarea().isEmpty() &&
-                tarea.getDescripcionTarea() != null && !tarea.getDescripcionTarea().isEmpty() &&
-                tarea.getFechaInicio() > 0 &&
-                tarea.getFechaFinal() > 0 &&
-                tarea.getPrioridad() > 0){
-            SQLiteDatabase baseDatosApp = baseDeDatos.getWritableDatabase();
+    public boolean modificarTarea(Tarea tarea){
 
-            ContentValues registrar = new ContentValues();
-            registrar.put("nombreTarea", tarea.getNombreTarea());
-            registrar.put("descripcionTarea", tarea.getDescripcionTarea());
-            registrar.put("fechaInicio", tarea.getFechaInicio());
-            registrar.put("fechaFinal", tarea.getFechaFinal());
-            registrar.put("prioridad", tarea.getPrioridad());
+        SQLiteDatabase db = baseDeDatos.getWritableDatabase();
 
-            int cantidad = baseDatosApp.update
-                    ("tareas",registrar,"where nombreTarea ="+
-                            tarea.getNombreTarea(),null);
-            baseDatosApp.close();
-            if (cantidad > 0){
-                return true;
-            }else{
-                return false;
-            }
-        } else {
-            return false;
-        }
+        ContentValues values = new ContentValues();
+        values.put("descripcionTarea", tarea.getDescripcionTarea());
+        values.put("fechaInicio", tarea.getFechaInicio());
+        values.put("fechaFinal", tarea.getFechaFinal());
+        values.put("prioridad", tarea.getPrioridad());
 
+        int filas = db.update(
+                "tareas",
+                values,
+                "nombreTarea = ?",
+                new String[]{tarea.getNombreTarea()}
+        );
+
+        db.close();
+
+        return filas > 0;
     }
 
-    public boolean bajaTarea (Tarea tarea){
-        SQLiteDatabase baseDatosApp = baseDeDatos.getWritableDatabase();
-        String nombreT = tarea.getNombreTarea();
-        if(!nombreT.isEmpty()){
-            int cantidad = baseDatosApp.delete
-                    ("tareas","where nombreTarea=" + nombreT, null);
-            if (cantidad == 1){
-                return true;
-            }else{
-                return false;
-            }
-        }
-        else {
-            return false;
-        }
+    public boolean bajaTarea(Tarea tarea){
+
+        SQLiteDatabase db = baseDeDatos.getWritableDatabase();
+
+        int filas = db.delete(
+                "tareas",
+                "nombreTarea = ?",
+                new String[]{tarea.getNombreTarea()}
+        );
+
+        db.close();
+
+        return filas > 0;
     }
 }
