@@ -16,13 +16,25 @@ import java.util.ArrayList;
 
 import utils.session;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
+
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieEntry;
+
+import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.PieData;
+
+import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.PieDataSet;
+
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 public class fragmentInicio extends Fragment {
+
+    private BarChart barChartGeneral;
+    private PieChart pieChartTareas;
+    private PieChart pieChartHabitos;
 
     public fragmentInicio() {}
 
@@ -38,18 +50,6 @@ public class fragmentInicio extends Fragment {
         }
     }
 
-    public static fragmentInicio newInstance(String param1, String param2) {
-        fragmentInicio fragment = new fragmentInicio();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,6 +57,7 @@ public class fragmentInicio extends Fragment {
         return inflater.inflate(R.layout.fragment_inicio, container, false);
     }
 
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -73,21 +74,95 @@ public class fragmentInicio extends Fragment {
                     .commit();
         });
 
-        PieChart pieChart = view.findViewById(R.id.pieChart);
+        // REFERENCIAS DE GRAFICOS
+
+        barChartGeneral = view.findViewById(R.id.barChartGeneral);
+        pieChartTareas = view.findViewById(R.id.pieChartTareas);
+        pieChartHabitos = view.findViewById(R.id.pieChartHabitos);
+
+        cargarGraficoGeneral();
+        cargarGraficoTareas();
+        cargarGraficoHabitos();
+    }
+
+    // =========================
+    // GRAFICO GENERAL (BARRAS)
+    // =========================
+
+    private void cargarGraficoGeneral(){
+
+        ArrayList<BarEntry> entries = new ArrayList<>();
+
+        // DATOS DE EJEMPLO
+
+        float habitosHechos = 7;
+        float habitosNoHechos = 3;
+        float tareasHechas = 5;
+        float tareasNoHechas = 4;
+
+        entries.add(new BarEntry(0, habitosHechos));
+        entries.add(new BarEntry(1, habitosNoHechos));
+        entries.add(new BarEntry(2, tareasHechas));
+        entries.add(new BarEntry(3, tareasNoHechas));
+
+        BarDataSet dataSet = new BarDataSet(entries, "Resumen General");
+        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+
+        BarData data = new BarData(dataSet);
+
+        barChartGeneral.setData(data);
+        barChartGeneral.setFitBars(true);
+        barChartGeneral.animateY(1000);
+        barChartGeneral.invalidate();
+    }
+
+    // =========================
+    // PIE TAREAS
+    // =========================
+
+    private void cargarGraficoTareas(){
 
         ArrayList<PieEntry> entries = new ArrayList<>();
 
-        entries.add(new PieEntry(70f, "Completados"));
-        entries.add(new PieEntry(30f, "Pendientes"));
+        float tareasHechas = 5;
+        float tareasNoHechas = 4;
+
+        entries.add(new PieEntry(tareasHechas, "Hechas"));
+        entries.add(new PieEntry(tareasNoHechas, "Pendientes"));
+
+        PieDataSet dataSet = new PieDataSet(entries, "Tareas");
+        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+
+        PieData data = new PieData(dataSet);
+
+        pieChartTareas.setData(data);
+        pieChartTareas.setCenterText("Tareas");
+        pieChartTareas.animateY(1000);
+        pieChartTareas.invalidate();
+    }
+
+    // =========================
+    // PIE HABITOS
+    // =========================
+
+    private void cargarGraficoHabitos(){
+
+        ArrayList<PieEntry> entries = new ArrayList<>();
+
+        float habitosHechos = 7;
+        float habitosNoHechos = 3;
+
+        entries.add(new PieEntry(habitosHechos, "Hechos"));
+        entries.add(new PieEntry(habitosNoHechos, "No hechos"));
 
         PieDataSet dataSet = new PieDataSet(entries, "Hábitos");
         dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
 
         PieData data = new PieData(dataSet);
 
-        pieChart.setData(data);
-        pieChart.setCenterText("Estadísticas");
-        pieChart.animateY(1000);
-        pieChart.invalidate();
+        pieChartHabitos.setData(data);
+        pieChartHabitos.setCenterText("Hábitos");
+        pieChartHabitos.animateY(1000);
+        pieChartHabitos.invalidate();
     }
 }
