@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="verde_android">#3DDC84</color>
     <color name="green">#C8E6C9</color>
+    <color name="checkbox_checked">#4CAF50</color>
+    <color name="checkbox_unchecked">#BDBDBD</color>
 </resources>

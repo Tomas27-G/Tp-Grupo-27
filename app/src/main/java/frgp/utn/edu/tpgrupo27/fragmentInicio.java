@@ -73,15 +73,10 @@ public class fragmentInicio extends Fragment {
                     .commit();
         });
 
-        // =========================
-        // PIE CHART DE PRUEBA
-        // =========================
-
         PieChart pieChart = view.findViewById(R.id.pieChart);
 
         ArrayList<PieEntry> entries = new ArrayList<>();
 
-        // Datos de prueba
         entries.add(new PieEntry(70f, "Completados"));
         entries.add(new PieEntry(30f, "Pendientes"));
 

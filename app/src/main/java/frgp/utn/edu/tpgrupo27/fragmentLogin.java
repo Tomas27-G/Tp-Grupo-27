@@ -89,7 +89,6 @@ public class fragmentLogin extends Fragment {
 
         if(usuario != null){
 
-            // ⭐ GUARDAR SESIÓN
             session session = new session(requireContext());
             session.crearSesion(usuario.getIdUsuario(), usuario.getNombre());
 

@@ -22,8 +22,10 @@ import java.util.Locale;
 
 import frgp.utn.edu.tpgrupo27.database.DAO.DaoTarea;
 import frgp.utn.edu.tpgrupo27.entidades.Tarea;
+import frgp.utn.edu.tpgrupo27.negocio.negocioHabito;
+import frgp.utn.edu.tpgrupo27.negocio.negocioTarea;
 
-    public class fragmentTareas extends Fragment {
+public class fragmentTareas extends Fragment {
 
         private TextInputEditText etNombreTarea;
         private TextInputEditText etDescripcionTarea;
@@ -122,7 +124,8 @@ import frgp.utn.edu.tpgrupo27.entidades.Tarea;
             tarea.setFechaFinal(fechaFinal);
             tarea.setPrioridad(prioridad);
 
-            boolean resultado = daoTarea.altaTarea(tarea);
+            negocioTarea nTarea = new negocioTarea(requireContext());
+            boolean resultado = nTarea.crearTarea(tarea);
 
             if (resultado) {
                 Toast.makeText(getContext(), "Tarea guardada correctamente", Toast.LENGTH_SHORT).show();
