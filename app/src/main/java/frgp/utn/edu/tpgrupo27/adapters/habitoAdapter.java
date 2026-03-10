@@ -17,6 +17,7 @@ import android.graphics.Paint;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import utils.session;
 
 import frgp.utn.edu.tpgrupo27.R;
 import frgp.utn.edu.tpgrupo27.entidades.Habito;
@@ -123,7 +124,10 @@ public class habitoAdapter extends BaseAdapter {
 
             habito.setCheckeado(isChecked);
 
-            negocioHabito negocio = new negocioHabito(context);
+            session sesion = new session(context);
+            int idUsuario = sesion.getIdUsuario();
+
+            negocioHabito negocio = new negocioHabito(context, idUsuario);
 
             boolean actualizado = negocio.actualizarCheckeado(
                     habito.getIdHabito(),
@@ -175,7 +179,10 @@ public class habitoAdapter extends BaseAdapter {
                     .setMessage("¿Desea eliminar este hábito?")
                     .setPositiveButton("Aceptar", (dialog, which) -> {
 
-                        negocioHabito negocio = new negocioHabito(context);
+                        session sesion = new session(context);
+                        int idUsuario = sesion.getIdUsuario();
+
+                        negocioHabito negocio = new negocioHabito(context, idUsuario);
 
                         if (negocio.borrarHabito(habito)) {
 
@@ -267,7 +274,10 @@ public class habitoAdapter extends BaseAdapter {
                         habitoModificado.setFechaInicio(nuevaFechaInicio);
                         habitoModificado.setFrecuencia(nuevaFrecuencia);
 
-                        negocioHabito negocio = new negocioHabito(context);
+                        session sesion = new session(context);
+                        int idUsuario = sesion.getIdUsuario();
+
+                        negocioHabito negocio = new negocioHabito(context, idUsuario);
 
                         boolean modificado = negocio.modificarHabito(nombreOriginal, habitoModificado);
 

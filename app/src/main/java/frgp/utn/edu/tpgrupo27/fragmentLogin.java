@@ -17,7 +17,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
-import frgp.utn.edu.tpgrupo27.database.DAO.DaoUsuario;
 import frgp.utn.edu.tpgrupo27.entidades.Usuario;
 import frgp.utn.edu.tpgrupo27.negocio.negocioUsuario;
 import utils.session;
@@ -28,13 +27,13 @@ public class fragmentLogin extends Fragment {
     private MaterialButton btnLogin;
 
     public fragmentLogin() {}
+
     @Override
     public void onResume() {
         super.onResume();
 
         BottomNavigationView nav =
                 requireActivity().findViewById(R.id.buttom_navigation);
-
 
         if (nav != null) {
             nav.setVisibility(View.GONE);
@@ -78,7 +77,7 @@ public class fragmentLogin extends Fragment {
         );
     }
 
-    private void loginUsuario(){
+    private void loginUsuario() {
 
         String mail = etEmail.getText().toString().trim();
         String pass = etPassword.getText().toString().trim();
@@ -87,19 +86,26 @@ public class fragmentLogin extends Fragment {
 
         Usuario usuario = negocio.loguearseUsuario(mail, pass);
 
-        if(usuario != null){
+        if (usuario != null) {
 
-            session session = new session(requireContext());
-            session.crearSesion(usuario.getIdUsuario(), usuario.getNombre());
+            // Crear sesión
+            session sesion = new session(requireContext());
+            sesion.crearSesion(usuario.getIdUsuario(), usuario.getNombre());
 
             Toast.makeText(requireContext(),
-                    "Bienvenido " + usuario.getNombre(),
+                    "IDUSUARIO " + usuario.getIdUsuario(),
                     Toast.LENGTH_SHORT).show();
 
+          //  Toast.makeText(requireContext(),
+               //     "Bienvenido " + usuario.getNombre(),
+                //    Toast.LENGTH_SHORT).show();//
+
+            // Reiniciar MainActivity limpio
             Intent intent = new Intent(requireContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
 
-        }else{
+        } else {
             Toast.makeText(requireContext(),
                     "Usuario o contraseña incorrectos",
                     Toast.LENGTH_SHORT).show();

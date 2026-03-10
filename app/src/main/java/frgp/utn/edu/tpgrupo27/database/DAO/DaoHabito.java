@@ -10,21 +10,23 @@ import frgp.utn.edu.tpgrupo27.entidades.Habito;
 
 import java.util.ArrayList;
 import java.util.List;
+import utils.session;
+
 
 public class DaoHabito {
-
     private BaseSQLite baseDeDatos;
-
-    public DaoHabito(Context context) {
+    private int idUsuarioHabito;
+    public DaoHabito(Context context, int idUsuario) {
         baseDeDatos = new BaseSQLite(context, "baseDeDatosAPP", null, 1);
+        this.idUsuarioHabito = idUsuario;
     }
 
     public boolean altaHabito(Habito habito) {
+
         if (habito.getNombreHabito() != null && !habito.getNombreHabito().isEmpty() &&
                 habito.getDescripcionHabito() != null && !habito.getDescripcionHabito().isEmpty() &&
                 habito.getFechaInicio() > 0 &&
                 habito.getFrecuencia() > 0 ) {
-
             SQLiteDatabase baseDatosApp = baseDeDatos.getWritableDatabase();
 
             ContentValues registro = new ContentValues();
@@ -33,6 +35,8 @@ public class DaoHabito {
             registro.put("fechaInicio", habito.getFechaInicio());
             registro.put("frecuencia", habito.getFrecuencia());
             registro.put("checkeado", habito.getCheckeado() ? 1 : 0);
+            registro.put("idUsuario", idUsuarioHabito);
+
 
             long resultado = baseDatosApp.insert("habitos", null, registro);
 
@@ -43,17 +47,20 @@ public class DaoHabito {
     }
 
     public boolean consultaHabito(Habito habito) {
+
         SQLiteDatabase baseDatosApp = baseDeDatos.getReadableDatabase();
 
         int id = habito.getIdHabito();
 
-        if ( id >0 ) {
+        if (id > 0) {
+
             Cursor fila = baseDatosApp.rawQuery(
-                    "SELECT descripcionHabito, fechaInicio, frecuencia, checkeado FROM habitos WHERE idHabito = ?",
-                    new String[]{String.valueOf(habito.getIdHabito())}
+                    "SELECT descripcionHabito, fechaInicio, frecuencia, checkeado FROM habitos WHERE idHabito = ? AND idUsuario = ?",
+                    new String[]{String.valueOf(id), String.valueOf(idUsuarioHabito)}
             );
 
             if (fila.moveToFirst()) {
+
                 habito.setDescripcionHabito(fila.getString(0));
                 habito.setFechaInicio(fila.getLong(1));
                 habito.setFrecuencia(fila.getInt(2));
@@ -63,8 +70,10 @@ public class DaoHabito {
                 baseDatosApp.close();
                 return true;
             }
+
             fila.close();
         }
+
         baseDatosApp.close();
         return false;
     }
@@ -76,10 +85,11 @@ public class DaoHabito {
         int id = habito.getIdHabito();
 
         if(id > 0){
+
             int cantidad = baseDatosApp.delete(
                     "habitos",
-                    "idHabito = ?",
-                    new String[]{String.valueOf(id)}
+                    "idHabito = ? AND idUsuario = ?",
+                    new String[]{String.valueOf(id), String.valueOf(idUsuarioHabito)}
             );
 
             baseDatosApp.close();
@@ -108,7 +118,13 @@ public class DaoHabito {
         registro.put("frecuencia", habitoModificado.getFrecuencia());
         registro.put("checkeado", habitoModificado.getCheckeado() ? 1 : 0);
 
-        int cantidad = baseDatosApp.update("habitos", registro, "nombreHabito = ?", new String[]{nombreOriginal});
+        int cantidad = baseDatosApp.update(
+                "habitos",
+                registro,
+                "nombreHabito = ? AND idUsuario = ?",
+                new String[]{nombreOriginal, String.valueOf(idUsuarioHabito)}
+        );
+
         baseDatosApp.close();
 
         return cantidad > 0;
@@ -123,8 +139,8 @@ public class DaoHabito {
         int filas = db.update(
                 "habitos",
                 values,
-                "idHabito = ?",
-                new String[]{String.valueOf(id)}
+                "idHabito = ? AND idUsuario = ?",
+                new String[]{String.valueOf(id), String.valueOf(idUsuarioHabito)}
         );
 
         db.close();
@@ -138,11 +154,12 @@ public class DaoHabito {
         SQLiteDatabase db = baseDeDatos.getReadableDatabase();
 
         Cursor cursor = db.rawQuery(
-                "SELECT idHabito, nombreHabito, descripcionHabito, fechaInicio, frecuencia, checkeado FROM habitos",
-                null
+                "SELECT idHabito, nombreHabito, descripcionHabito, fechaInicio, frecuencia, checkeado FROM habitos WHERE idUsuario = ?",
+                new String[]{String.valueOf(idUsuarioHabito)}
         );
 
         if (cursor != null && cursor.moveToFirst()) {
+
             do {
 
                 Habito h = new Habito();

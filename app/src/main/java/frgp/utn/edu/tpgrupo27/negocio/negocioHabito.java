@@ -11,8 +11,8 @@ public class negocioHabito {
 
     private DaoHabito daoHabito;
 
-    public negocioHabito(Context context){
-        daoHabito = new DaoHabito(context);
+    public negocioHabito(Context context, int idUsuario){
+        daoHabito = new DaoHabito(context, idUsuario);
     }
 
     public boolean crearHabito(Habito habito){

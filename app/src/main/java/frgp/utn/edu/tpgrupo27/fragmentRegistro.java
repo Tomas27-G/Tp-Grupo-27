@@ -113,6 +113,10 @@ public class fragmentRegistro extends Fragment {
             session session = new session(requireContext());
             session.crearSesion(usuario.getIdUsuario(), usuario.getNombre());
 
+            Toast.makeText(requireContext(),
+                    "IDUSUARIO REGISTER " + usuario.getIdUsuario(),
+                    Toast.LENGTH_SHORT).show();
+
             requireActivity().recreate();
 
         }else{

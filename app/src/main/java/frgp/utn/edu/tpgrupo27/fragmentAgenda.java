@@ -16,6 +16,7 @@ import frgp.utn.edu.tpgrupo27.entidades.Habito;
 import frgp.utn.edu.tpgrupo27.entidades.Tarea;
 import frgp.utn.edu.tpgrupo27.negocio.negocioHabito;
 import frgp.utn.edu.tpgrupo27.negocio.negocioTarea;
+import utils.session;
 
 public class fragmentAgenda extends Fragment {
 
@@ -55,7 +56,10 @@ public class fragmentAgenda extends Fragment {
     }
     private void mostrarHabitos() {
 
-        negocioHabito negocio = new negocioHabito(requireContext());
+        session sesion = new session(requireContext());
+        int idUsuario = sesion.getIdUsuario();
+
+        negocioHabito negocio = new negocioHabito(requireContext(), idUsuario);
 
         List<Habito> listaHabitos = negocio.obtenerHabitos();
 

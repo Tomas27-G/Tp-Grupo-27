@@ -23,6 +23,7 @@ import java.util.Locale;
 import frgp.utn.edu.tpgrupo27.entidades.Habito;
 import frgp.utn.edu.tpgrupo27.negocio.negocioHabito;
 
+import utils.session;
 
 public class fragmentHabitos extends Fragment {
 
@@ -112,23 +113,22 @@ public class fragmentHabitos extends Fragment {
         }
     }
     private void guardarHabito(){
+
         String nombreH = nombreHabito.getText().toString().trim();
         String descripH = descripHabito.getText().toString().trim();
         Long fechaInicioH = convertirFecha(fechaInicioHabito.getText().toString().trim());
 
-
-
         int spinnerFrecuenciaH = spinnerFrecuencia.getSelectedItemPosition() + 1;
 
-
         if(nombreH.isEmpty() || descripH.isEmpty()
-                || spinnerFrecuenciaH <= 0  ){
+                || spinnerFrecuenciaH <= 0){
 
             Toast.makeText(requireContext(),
                     "Completa todos los campos",
                     Toast.LENGTH_SHORT).show();
             return;
         }
+
         Habito habito = new Habito();
 
         habito.setNombreHabito(nombreH);
@@ -136,8 +136,10 @@ public class fragmentHabitos extends Fragment {
         habito.setFechaInicio(fechaInicioH);
         habito.setFrecuencia(spinnerFrecuenciaH);
 
+        session sesion = new session(requireContext());
+        int idUs = sesion.getIdUsuario();
 
-        negocioHabito negocio = new negocioHabito(requireContext());
+        negocioHabito negocio = new negocioHabito(requireContext(), idUs);
         boolean resultado = negocio.crearHabito(habito);
 
         if(resultado){

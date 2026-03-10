@@ -15,29 +15,23 @@ public class DaoUsuario {
         baseDeDatos = new BaseSQLite(context, "baseDeDatosAPP", null, 1);
     }
     public boolean altaUsuario(Usuario usuario) {
-        SQLiteDatabase baseDatosAPP = baseDeDatos.getWritableDatabase();
-        boolean resultado = false;
+        SQLiteDatabase db = baseDeDatos.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("nombre", usuario.getNombre());
+        values.put("apellido", usuario.getApellido());
+        values.put("mail", usuario.getMail());
+        values.put("contrasena", usuario.getContrasena());
+        values.put("fechaNacimiento", usuario.getFechaNacimiento());
 
-        try {
-            ContentValues registro = new ContentValues();
-            registro.put("nombre", usuario.getNombre());
-            registro.put("apellido", usuario.getApellido());
-            registro.put("contrasena", usuario.getContrasena());
-            registro.put("mail", usuario.getMail());
-            registro.put("fechaNacimiento", usuario.getFechaNacimiento());
+        long idGenerado = db.insert("usuarios", null, values);
+        db.close();
 
-            long filaInsertada = baseDatosAPP.insert("usuarios", null, registro);
-
-            if (filaInsertada != -1) {
-                resultado = true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            baseDatosAPP.close();
+        if (idGenerado != -1) {
+            usuario.setIdUsuario((int) idGenerado);
+            return true;
+        } else {
+            return false;
         }
-
-        return resultado;
     }
 
     public boolean modificarUsuario(Usuario usuario) {
