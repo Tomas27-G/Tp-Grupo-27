@@ -11,18 +11,21 @@ public class Tarea {
   private int prioridad;
 
   private boolean checkeado;
+
+  private int idUsuario;
   public Tarea () {
 
   }
 
   public Tarea (String nombreTarea, String descripcionTarea, long fechaInicio,
-                long fechaFinal, int prioridad,boolean checkeado) {
+                long fechaFinal, int prioridad,boolean checkeado, int idUsuario) {
     this.nombreTarea = nombreTarea;
     this.descripcionTarea = descripcionTarea;
     this.fechaInicio = fechaInicio;
     this.fechaFinal = fechaFinal;
     this.prioridad = prioridad;
     this.checkeado=checkeado;
+    this.idUsuario = idUsuario;
   }
 
     public int getIdTarea() {return idTarea;}
@@ -62,4 +65,8 @@ public class Tarea {
   public boolean getCheckeado() { return checkeado;}
 
   public void setCheckeado(boolean checkeado){ this.checkeado=checkeado;}
+
+  public int getIdUsuario() {return idUsuario;}
+
+  public void setIdUsuario(int idUsuario) {this.idUsuario = idUsuario;}
 }

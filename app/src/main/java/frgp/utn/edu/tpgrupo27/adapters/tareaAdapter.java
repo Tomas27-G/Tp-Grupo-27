@@ -21,6 +21,7 @@ import java.util.Locale;
 import frgp.utn.edu.tpgrupo27.R;
 import frgp.utn.edu.tpgrupo27.entidades.Tarea;
 import frgp.utn.edu.tpgrupo27.negocio.negocioTarea;
+import utils.session;
 
 public class tareaAdapter extends ArrayAdapter<Tarea> {
 
@@ -75,8 +76,10 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
         check.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
             tarea.setCheckeado(isChecked);
+            session sesion = new session(context);
+            int idUsuario = sesion.getIdUsuario();
 
-            negocioTarea negocio = new negocioTarea(context);
+            negocioTarea negocio = new negocioTarea(context, idUsuario);
             boolean resultado = negocio.actualizarCheckeado(tarea.getIdTarea(), isChecked);
 
             if(resultado){
@@ -104,7 +107,10 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
                     .setMessage("¿Desea eliminar esta tarea?")
                     .setPositiveButton("Aceptar", (dialog, which) -> {
 
-                        negocioTarea negocio = new negocioTarea(context);
+                        session sesion = new session(context);
+                        int idUsuario = sesion.getIdUsuario();
+
+                        negocioTarea negocio = new negocioTarea(context, idUsuario);
                         boolean resultado = negocio.eliminarTarea(tarea);
 
                         if(resultado){
@@ -167,7 +173,10 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
                         tarea.setFechaInicio(fechaInicioLong);
                         tarea.setFechaFinal(fechaFinLong);
 
-                        negocioTarea negocio = new negocioTarea(context);
+                        session sesion = new session(context);
+                        int idUsuario = sesion.getIdUsuario();
+
+                        negocioTarea negocio = new negocioTarea(context, idUsuario);
                         boolean resultado = negocio.modificarTarea(tarea);
 
                         if(resultado){

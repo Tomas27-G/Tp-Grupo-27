@@ -11,8 +11,8 @@ public class negocioTarea {
 
     private DaoTarea daoTarea;
 
-    public negocioTarea(Context context){
-        daoTarea = new DaoTarea(context);
+    public negocioTarea(Context context, int idUsuario){
+        daoTarea = new DaoTarea(context, idUsuario);
     }
 
     public boolean crearTarea(Tarea tarea){

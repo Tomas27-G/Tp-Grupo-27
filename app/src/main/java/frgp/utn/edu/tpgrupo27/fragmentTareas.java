@@ -26,6 +26,7 @@ import frgp.utn.edu.tpgrupo27.database.DAO.DaoTarea;
 import frgp.utn.edu.tpgrupo27.entidades.Tarea;
 import frgp.utn.edu.tpgrupo27.negocio.negocioHabito;
 import frgp.utn.edu.tpgrupo27.negocio.negocioTarea;
+import utils.session;
 
 public class fragmentTareas extends Fragment {
 
@@ -35,8 +36,6 @@ public class fragmentTareas extends Fragment {
         private TextInputEditText etFechaFinal;
         private Spinner spinnerPrioridad;
         private MaterialButton btnGuardar;
-
-        private DaoTarea daoTarea;
 
         public fragmentTareas() {
             // Required empty public constructor
@@ -98,8 +97,6 @@ public class fragmentTareas extends Fragment {
             etFechaFinal.setOnClickListener(v -> mostrarDatePicker(etFechaFinal));
             cargarSpinnerPrioridad();
             btnGuardar = view.findViewById(R.id.btnGuardarTarea);
-
-            daoTarea = new DaoTarea(getContext());
 
             btnGuardar.setOnClickListener(v -> guardarTarea());
 
@@ -165,7 +162,10 @@ public class fragmentTareas extends Fragment {
             tarea.setFechaFinal(fechaFinal);
             tarea.setPrioridad(prioridad);
 
-            negocioTarea nTarea = new negocioTarea(requireContext());
+            session sesion = new session(requireContext());
+            int idUs = sesion.getIdUsuario();
+
+            negocioTarea nTarea = new negocioTarea(requireContext(), idUs);
             boolean resultado = nTarea.crearTarea(tarea);
 
             if (resultado) {

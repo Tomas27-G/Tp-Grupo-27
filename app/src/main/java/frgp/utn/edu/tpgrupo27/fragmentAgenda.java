@@ -42,7 +42,10 @@ public class fragmentAgenda extends Fragment {
 
     private void mostrarTareas() {
 
-        negocioTarea negocio = new negocioTarea(requireContext());
+        session sesion = new session(requireContext());
+        int idUsuario = sesion.getIdUsuario();
+
+        negocioTarea negocio = new negocioTarea(requireContext(), idUsuario);
 
         List<Tarea> listaTareas = negocio.listarTareas();
 

@@ -15,8 +15,11 @@ public class DaoTarea {
 
     private BaseSQLite baseDeDatos;
 
-    public DaoTarea(Context context){
+    private int idUsuarioTarea;
+
+    public DaoTarea(Context context, int idUsuarioTarea){
         baseDeDatos = new BaseSQLite(context,"baseDeDatosAPP",null,1);
+        this.idUsuarioTarea = idUsuarioTarea;
     }
 
     public boolean altaTarea(Tarea tarea){
@@ -35,6 +38,7 @@ public class DaoTarea {
             values.put("fechaInicio", tarea.getFechaInicio());
             values.put("fechaFinal", tarea.getFechaFinal());
             values.put("prioridad", tarea.getPrioridad());
+            values.put("idUsuario",idUsuarioTarea);
 
             // NUEVO
             values.put("checkeado", tarea.getCheckeado() ? 1 : 0);
@@ -54,8 +58,8 @@ public class DaoTarea {
         SQLiteDatabase db = baseDeDatos.getReadableDatabase();
 
         Cursor fila = db.rawQuery(
-                "SELECT nombreTarea, descripcionTarea, fechaInicio, fechaFinal, prioridad, checkeado FROM tareas WHERE idTarea = ?",
-                new String[]{String.valueOf(tarea.getIdTarea())}
+                "SELECT nombreTarea, descripcionTarea, fechaInicio, fechaFinal, prioridad, checkeado FROM tareas WHERE idTarea = ? AND idUsuario = ?",
+                new String[]{String.valueOf(tarea.getIdTarea()), String.valueOf(idUsuarioTarea)}
         );
 
         if (fila.moveToFirst()){
@@ -86,8 +90,8 @@ public class DaoTarea {
         SQLiteDatabase db = baseDeDatos.getReadableDatabase();
 
         Cursor cursor = db.rawQuery(
-                "SELECT idTarea, nombreTarea, descripcionTarea, fechaInicio, fechaFinal, prioridad, checkeado FROM tareas",
-                null
+                "SELECT idTarea, nombreTarea, descripcionTarea, fechaInicio, fechaFinal, prioridad, checkeado FROM tareas  WHERE idUsuario = ?",
+                new String[]{String.valueOf(idUsuarioTarea)}
         );
 
         if (cursor != null && cursor.moveToFirst()){
@@ -123,20 +127,18 @@ public class DaoTarea {
         SQLiteDatabase db = baseDeDatos.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put("nombreTarea",tarea.getNombreTarea());
+        values.put("nombreTarea", tarea.getNombreTarea());
         values.put("descripcionTarea", tarea.getDescripcionTarea());
         values.put("fechaInicio", tarea.getFechaInicio());
         values.put("fechaFinal", tarea.getFechaFinal());
         values.put("prioridad", tarea.getPrioridad());
-
-        // NUEVO
         values.put("checkeado", tarea.getCheckeado() ? 1 : 0);
 
         int filas = db.update(
                 "tareas",
                 values,
-                "idTarea = ?",
-                new String[]{String.valueOf(tarea.getIdTarea())}
+                "idTarea = ? AND idUsuario = ?",
+                new String[]{String.valueOf(tarea.getIdTarea()), String.valueOf(idUsuarioTarea)}
         );
 
         db.close();
@@ -155,8 +157,8 @@ public class DaoTarea {
         int filas = db.update(
                 "tareas",
                 values,
-                "idTarea = ?",
-                new String[]{String.valueOf(idTarea)}
+                "idTarea = ? AND idUsuario = ?",
+                new String[]{String.valueOf(idTarea), String.valueOf(idUsuarioTarea)}
         );
 
         db.close();
@@ -170,8 +172,8 @@ public class DaoTarea {
 
         int filas = db.delete(
                 "tareas",
-                "idTarea = ?",
-                new String[]{String.valueOf(tarea.getIdTarea())}
+                "idTarea = ? AND idUsuario = ?",
+                new String[]{String.valueOf(tarea.getIdTarea()), String.valueOf(idUsuarioTarea)}
         );
 
         db.close();
