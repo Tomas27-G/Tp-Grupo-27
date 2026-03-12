@@ -33,5 +33,12 @@ public class negocioHabito {
     public boolean actualizarCheckeado(int idHabito, boolean estado){
         return daoHabito.actualizarCheckeado(idHabito, estado);
     }
+    public int contarHabitosHechos(){
+        return daoHabito.contarHabitosHechos();
+    }
+    public int contarHabitosNoHechos(){
+        return daoHabito.contarHabitosNoHechos();
+    }
+
 
 }

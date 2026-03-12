@@ -180,4 +180,45 @@ public class DaoTarea {
 
         return filas > 0;
     }
+
+    public int contarTareasHechas(){
+
+        int cantidad = 0;
+
+        SQLiteDatabase db = baseDeDatos.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT COUNT(*) FROM tareas WHERE checkeado = 1 AND idUsuario = ?",
+                new String[]{String.valueOf(idUsuarioTarea)}
+        );
+
+        if(cursor.moveToFirst()){
+            cantidad = cursor.getInt(0);
+        }
+
+        cursor.close();
+        db.close();
+
+        return cantidad;
+    }
+    public int contarTareasPendientes(){
+
+        int cantidad = 0;
+
+        SQLiteDatabase db = baseDeDatos.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT COUNT(*) FROM tareas WHERE checkeado = 0 AND idUsuario = ?",
+                new String[]{String.valueOf(idUsuarioTarea)}
+        );
+
+        if(cursor.moveToFirst()){
+            cantidad = cursor.getInt(0);
+        }
+
+        cursor.close();
+        db.close();
+
+        return cantidad;
+    }
 }

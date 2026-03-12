@@ -185,4 +185,47 @@ public class DaoHabito {
         return lista;
     }
 
+
+    public int contarHabitosHechos(){
+
+        int cantidad = 0;
+
+        SQLiteDatabase db = baseDeDatos.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT COUNT(*) FROM habitos WHERE checkeado = 1 AND idUsuario = ?",
+                new String[]{String.valueOf(idUsuarioHabito)}
+        );
+
+        if(cursor.moveToFirst()){
+            cantidad = cursor.getInt(0);
+        }
+
+        cursor.close();
+        db.close();
+
+        return cantidad;
+    }
+    public int contarHabitosNoHechos(){
+
+        int cantidad = 0;
+
+        SQLiteDatabase db = baseDeDatos.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT COUNT(*) FROM habitos WHERE checkeado = 0 AND idUsuario = ?",
+                new String[]{String.valueOf(idUsuarioHabito)}
+        );
+
+        if(cursor.moveToFirst()){
+            cantidad = cursor.getInt(0);
+        }
+
+        cursor.close();
+        db.close();
+
+        return cantidad;
+    }
+
+
 }

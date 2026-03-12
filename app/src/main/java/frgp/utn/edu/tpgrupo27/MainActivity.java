@@ -17,7 +17,6 @@ import utils.session;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView txtBienvenida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +30,10 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        txtBienvenida = findViewById(R.id.txtBienvenida);
+
 
         session session = new session(this);
 
-        if(session.estaLogueado()){
-            txtBienvenida.setText("Bienvenido " + session.getNombre());
-            txtBienvenida.setVisibility(View.GONE);
-        }
 
         BottomNavigationView bottomNavigation =
                 findViewById(R.id.buttom_navigation);

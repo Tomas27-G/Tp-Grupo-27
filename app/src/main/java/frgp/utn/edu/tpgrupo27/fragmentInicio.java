@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import frgp.utn.edu.tpgrupo27.negocio.negocioHabito;
+import frgp.utn.edu.tpgrupo27.negocio.negocioTarea;
 import utils.session;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -35,6 +37,12 @@ public class fragmentInicio extends Fragment {
     private BarChart barChartGeneral;
     private PieChart pieChartTareas;
     private PieChart pieChartHabitos;
+
+    private TextView txtBienvenida;
+    private float habitosHechos;
+    private float habitosNoHechos;
+    private float tareasHechas;
+    private float tareasNoHechas;
 
     public fragmentInicio() {}
 
@@ -61,12 +69,17 @@ public class fragmentInicio extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        session session = new session(getContext());
+        session sesion = new session(requireContext());
+        int idUsuario = sesion.getIdUsuario();
+        String nombreUsuario = sesion. getNombre();
+
+        txtBienvenida = requireActivity().findViewById(R.id.txtBienvenida);
+        txtBienvenida.setText("Bienvenido " + nombreUsuario);
 
         Button btnCerrar = view.findViewById(R.id.btnCerrar);
 
         btnCerrar.setOnClickListener(v -> {
-            session.cerrarSesion();
+            sesion.cerrarSesion();
 
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
@@ -74,7 +87,13 @@ public class fragmentInicio extends Fragment {
                     .commit();
         });
 
-        // REFERENCIAS DE GRAFICOS
+        negocioTarea negocioTarea = new negocioTarea(requireContext(), idUsuario);
+        negocioHabito negocioHabito = new negocioHabito(requireContext(), idUsuario);
+
+        habitosHechos = negocioHabito.contarHabitosHechos();
+        habitosNoHechos = negocioHabito.contarHabitosNoHechos();
+        tareasHechas = negocioTarea.contarTareasHechas();
+        tareasNoHechas = negocioTarea.contarTareasPendientes();
 
         barChartGeneral = view.findViewById(R.id.barChartGeneral);
         pieChartTareas = view.findViewById(R.id.pieChartTareas);
@@ -86,19 +105,12 @@ public class fragmentInicio extends Fragment {
     }
 
     // =========================
-    // GRAFICO GENERAL (BARRAS)
+    // GRAFICO GENERAL
     // =========================
 
     private void cargarGraficoGeneral(){
 
         ArrayList<BarEntry> entries = new ArrayList<>();
-
-        // DATOS DE EJEMPLO
-
-        float habitosHechos = 7;
-        float habitosNoHechos = 3;
-        float tareasHechas = 5;
-        float tareasNoHechas = 4;
 
         entries.add(new BarEntry(0, habitosHechos));
         entries.add(new BarEntry(1, habitosNoHechos));
@@ -124,9 +136,6 @@ public class fragmentInicio extends Fragment {
 
         ArrayList<PieEntry> entries = new ArrayList<>();
 
-        float tareasHechas = 5;
-        float tareasNoHechas = 4;
-
         entries.add(new PieEntry(tareasHechas, "Hechas"));
         entries.add(new PieEntry(tareasNoHechas, "Pendientes"));
 
@@ -148,9 +157,6 @@ public class fragmentInicio extends Fragment {
     private void cargarGraficoHabitos(){
 
         ArrayList<PieEntry> entries = new ArrayList<>();
-
-        float habitosHechos = 7;
-        float habitosNoHechos = 3;
 
         entries.add(new PieEntry(habitosHechos, "Hechos"));
         entries.add(new PieEntry(habitosNoHechos, "No hechos"));

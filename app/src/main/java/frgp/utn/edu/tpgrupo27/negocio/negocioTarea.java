@@ -38,5 +38,11 @@ public class negocioTarea {
     public boolean actualizarCheckeado(int idTarea, boolean estado){
         return daoTarea.actualizarCheckeado(idTarea, estado);
     }
+    public int contarTareasHechas(){
+        return daoTarea.contarTareasHechas();
+    }
+    public int contarTareasPendientes(){
+        return daoTarea.contarTareasPendientes();
+    }
 
 }
