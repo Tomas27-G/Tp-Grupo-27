@@ -131,4 +131,19 @@ public class DaoUsuario {
 
         return resultado;
     }
+
+    public boolean verificarMail(String mail){
+        SQLiteDatabase baseDatosAPP = baseDeDatos.getReadableDatabase();
+
+        Cursor cursor = baseDatosAPP.rawQuery("SELECT * FROM usuarios WHERE mail = ?",
+                new String[]{mail});
+
+        if (cursor.moveToFirst()){
+            cursor.close();
+            return true;
+        }
+
+        cursor.close();
+        return false;
+    }
 }

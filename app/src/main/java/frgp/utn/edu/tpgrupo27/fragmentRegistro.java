@@ -102,6 +102,11 @@ public class fragmentRegistro extends Fragment {
 
         negocioUsuario negocio = new negocioUsuario(requireContext());
 
+        if(negocio.verificarEmail(email)){
+            etEmail.setError("El email ya está registrado");
+            return;
+        }
+
         boolean resultado = negocio.crearUsuario(usuario);
 
         if(resultado){
@@ -112,10 +117,6 @@ public class fragmentRegistro extends Fragment {
 
             session session = new session(requireContext());
             session.crearSesion(usuario.getIdUsuario(), usuario.getNombre());
-
-            Toast.makeText(requireContext(),
-                    "IDUSUARIO REGISTER " + usuario.getIdUsuario(),
-                    Toast.LENGTH_SHORT).show();
 
             requireActivity().recreate();
 

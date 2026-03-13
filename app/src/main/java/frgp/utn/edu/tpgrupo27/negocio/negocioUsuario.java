@@ -19,4 +19,8 @@ public class negocioUsuario {
 
         return daoUsuario.loginUsuario(mail, contrasena);
     }
+
+    public boolean verificarEmail(String mail){
+        return daoUsuario.verificarMail(mail);
+    }
 }
