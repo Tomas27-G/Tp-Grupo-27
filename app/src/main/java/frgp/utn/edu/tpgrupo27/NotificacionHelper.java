@@ -5,18 +5,19 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import java.util.Calendar;
+
 import utils.RecordatorioReceiver;
 
 public class NotificacionHelper {
 
-    public static void programarNotificacion(Context context, long fecha, int id) {
+    public static void programarNotificacionDiaria(Context context, int hora, int minuto) {
 
         Intent intent = new Intent(context, RecordatorioReceiver.class);
 
-
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
-                id,
+                1,
                 intent,
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
         );
@@ -24,12 +25,21 @@ public class NotificacionHelper {
         AlarmManager alarmManager =
                 (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        alarmManager.set(
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hora);
+        calendar.set(Calendar.MINUTE, minuto);
+        calendar.set(Calendar.SECOND, 0);
+
+        // Si la hora ya pasó hoy, la programa para mañana
+        if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+        }
+
+        alarmManager.setRepeating(
                 AlarmManager.RTC_WAKEUP,
-                fecha,
+                calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY,
                 pendingIntent
         );
     }
-
-
 }

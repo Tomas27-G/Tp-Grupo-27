@@ -169,13 +169,7 @@ public class fragmentTareas extends Fragment {
             boolean resultado = nTarea.crearTarea(tarea);
 
             if (resultado) {
-                long recordatorio = fechaFinal - (60 * 60 * 1000);
 
-                NotificacionHelper.programarNotificacion(
-                        requireContext(),
-                        recordatorio,
-                        tarea.getIdTarea()
-                );
                 Toast.makeText(getContext(), "Tarea guardada correctamente", Toast.LENGTH_SHORT).show();
                 limpiarCampos();
             } else {

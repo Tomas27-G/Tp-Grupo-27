@@ -221,4 +221,34 @@ public class DaoTarea {
 
         return cantidad;
     }
+    public int contarTareasPendientesHoy(){
+
+        int cantidad = 0;
+
+        SQLiteDatabase db = baseDeDatos.getReadableDatabase();
+
+        long hoy = System.currentTimeMillis();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT COUNT(*) FROM tareas " +
+                        "WHERE checkeado = 0 " +
+                        "AND idUsuario = ? " +
+                        "AND fechaInicio <= ? " +
+                        "AND fechaFinal >= ?",
+                new String[]{
+                        String.valueOf(idUsuarioTarea),
+                        String.valueOf(hoy),
+                        String.valueOf(hoy)
+                }
+        );
+
+        if(cursor.moveToFirst()){
+            cantidad = cursor.getInt(0);
+        }
+
+        cursor.close();
+        db.close();
+
+        return cantidad;
+    }
 }

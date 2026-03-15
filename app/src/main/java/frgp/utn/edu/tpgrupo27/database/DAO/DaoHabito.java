@@ -226,6 +226,33 @@ public class DaoHabito {
 
         return cantidad;
     }
+    public int contarHabitosPendientesHoy(){
 
+        int cantidad = 0;
+
+        SQLiteDatabase db = baseDeDatos.getReadableDatabase();
+
+        long hoy = System.currentTimeMillis();
+
+        Cursor cursor = db.rawQuery(
+                "SELECT COUNT(*) FROM habitos " +
+                        "WHERE checkeado = 0 " +
+                        "AND idUsuario = ? " +
+                        "AND fechaInicio <= ?",
+                new String[]{
+                        String.valueOf(idUsuarioHabito),
+                        String.valueOf(hoy)
+                }
+        );
+
+        if(cursor.moveToFirst()){
+            cantidad = cursor.getInt(0);
+        }
+
+        cursor.close();
+        db.close();
+
+        return cantidad;
+    }
 
 }

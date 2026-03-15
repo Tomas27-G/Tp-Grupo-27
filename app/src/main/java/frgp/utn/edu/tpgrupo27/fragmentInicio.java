@@ -64,7 +64,6 @@ public class fragmentInicio extends Fragment {
 
         return inflater.inflate(R.layout.fragment_inicio, container, false);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -98,6 +97,8 @@ public class fragmentInicio extends Fragment {
         barChartGeneral = view.findViewById(R.id.barChartGeneral);
         pieChartTareas = view.findViewById(R.id.pieChartTareas);
         pieChartHabitos = view.findViewById(R.id.pieChartHabitos);
+
+
 
         cargarGraficoGeneral();
         cargarGraficoTareas();

@@ -44,5 +44,8 @@ public class negocioTarea {
     public int contarTareasPendientes(){
         return daoTarea.contarTareasPendientes();
     }
+    public int contarTareasPendientesHoy(){
+        return daoTarea.contarTareasPendientesHoy();
+    }
 
 }

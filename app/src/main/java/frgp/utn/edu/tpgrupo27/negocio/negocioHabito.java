@@ -39,6 +39,8 @@ public class negocioHabito {
     public int contarHabitosNoHechos(){
         return daoHabito.contarHabitosNoHechos();
     }
-
+    public int contarHabitosPendientesHoy(){
+        return daoHabito.contarHabitosPendientesHoy();
+    }
 
 }
