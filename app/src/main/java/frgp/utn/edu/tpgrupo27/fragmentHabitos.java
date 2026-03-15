@@ -144,6 +144,12 @@ public class fragmentHabitos extends Fragment {
 
         if(resultado){
 
+            NotificacionHelper.programarNotificacion(
+                    requireContext(),
+                    fechaInicioH,
+                    habito.getIdHabito()
+            );
+
             Toast.makeText(requireContext(),
                     "Habito registrado correctamente",
                     Toast.LENGTH_SHORT).show();
