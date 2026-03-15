@@ -1,5 +1,6 @@
 package frgp.utn.edu.tpgrupo27;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import utils.RecordatorioReceiver;
 import utils.session;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        NotificacionHelper.programarNotificacionDiaria(this, 17, 25); // a que hora llegan las notificaciones
+        // new RecordatorioReceiver().onReceive(this, new Intent());
+        // NotificacionHelper.programarNotificacionDiaria(this, 17, 39); // a que hora llegan las notificaciones
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
