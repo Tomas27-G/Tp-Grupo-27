@@ -57,7 +57,9 @@ public class fragmentRegistro extends Fragment {
                         .commit()
         );
     }
-
+    private boolean contieneNumeros(String texto){
+        return texto.matches(".*\\d.*");
+    }
     private void registrarUsuario(){
 
         String nombre = etNombre.getText().toString().trim();
@@ -65,6 +67,13 @@ public class fragmentRegistro extends Fragment {
         String edad = etEdad.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         String pass = etPassword.getText().toString().trim();
+
+        if(contieneNumeros(nombre) || contieneNumeros(apellido)){
+            Toast.makeText(getContext(),
+                    "El nombre y el apellido no pueden tener números",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if(nombre.isEmpty() || apellido.isEmpty()
                 || email.isEmpty() || pass.isEmpty()){
@@ -74,6 +83,7 @@ public class fragmentRegistro extends Fragment {
                     Toast.LENGTH_SHORT).show();
             return;
         }
+
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             etEmail.setError("Ingrese un correo válido");
             return;
