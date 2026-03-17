@@ -91,15 +91,14 @@ public class fragmentRegistro extends Fragment {
             etEmail.setError(null);
         }
 
-        String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$";
+        String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$";
 
         if (!pass.matches(passwordPattern)) {
-            etPassword.setError("Contraseña débil: Debe tener al menos 8 caracteres, una mayúscula, un número y un carácter especial");
+            etPassword.setError("Contraseña débil: Debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número.");
             return;
         } else {
             etPassword.setError(null);
         }
-
 
 
 

@@ -112,6 +112,9 @@ public class fragmentHabitos extends Fragment {
             return 0L;
         }
     }
+    private boolean contieneNumeros(String texto){
+        return texto.matches(".*\\d.*");
+    }
     private void guardarHabito(){
 
         String nombreH = nombreHabito.getText().toString().trim();
@@ -119,6 +122,13 @@ public class fragmentHabitos extends Fragment {
         Long fechaInicioH = convertirFecha(fechaInicioHabito.getText().toString().trim());
 
         int spinnerFrecuenciaH = spinnerFrecuencia.getSelectedItemPosition() + 1;
+
+        if(contieneNumeros(nombreH) || contieneNumeros(descripH)){
+            Toast.makeText(getContext(),
+                    "El nombre y la descripción no pueden tener números",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if(nombreH.isEmpty() || descripH.isEmpty()
                 || spinnerFrecuenciaH <= 0){
