@@ -270,7 +270,7 @@ public class habitoAdapter extends BaseAdapter {
             EditText etFrecuencia = new EditText(context);
             etFrecuencia.setInputType(InputType.TYPE_CLASS_NUMBER);
             etFrecuencia.setText(String.valueOf(habito.getFrecuencia()));
-            etFrecuencia.setHint("Frecuencia (1:Diaria, 2:Semanal, 3:Mensual)");
+            etFrecuencia.setHint("Frecuencia (1,2,3,4,5,6,7)");
             layout.addView(etFrecuencia);
 
             etFechaInicio.setOnClickListener(v1 ->
@@ -294,13 +294,30 @@ public class habitoAdapter extends BaseAdapter {
                             return;
                         }
 
+                        int nuevaFrecuencia;
+
+                        try {
+                            nuevaFrecuencia = Integer.parseInt(nuevaFrecuenciaStr);
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(context, "La frecuencia debe ser un número válido", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
 
-
+                        if (nuevaFrecuencia < 1 || nuevaFrecuencia > 7) {
+                            Toast.makeText(context, "La frecuencia debe ser del 1 al 7", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        if(contieneNumeros(nuevoNombre) || contieneNumeros(nuevaDescripcion)){
+                            Toast.makeText(context,
+                                    "El nombre y la descripción no pueden tener números",
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
 
                         long nuevaFechaInicio;
-                        int nuevaFrecuencia;
+
 
 
                         try {
@@ -369,5 +386,9 @@ public class habitoAdapter extends BaseAdapter {
 
         ImageButton btnModificar;
 
+    }
+
+    private boolean contieneNumeros(String texto){
+        return texto.matches(".*\\d.*");
     }
 }

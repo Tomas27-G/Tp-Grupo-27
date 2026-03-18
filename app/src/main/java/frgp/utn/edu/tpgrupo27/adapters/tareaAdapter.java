@@ -206,6 +206,13 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
                             Toast.makeText(context, "El nombre que modifique no tiene que estar vacio", Toast.LENGTH_SHORT).show();
                             return;
                         }
+                        if(contieneNumeros(nuevoNombre) ){
+                            Toast.makeText(context,
+                                    "El nombre  no puede tener números",
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
 
                         long fechaInicioLong, fechaFinLong;
 
@@ -246,5 +253,9 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
         });
 
         return convertView;
+    }
+
+    private boolean contieneNumeros(String texto){
+        return texto.matches(".*\\d.*");
     }
 }
