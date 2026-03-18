@@ -30,6 +30,13 @@
             android:textStyle="bold"/>
 
         <TextView
+            android:id="@+id/tvDescripcionHabito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Descripción:"
+            android:textSize="14sp"/>
+
+        <TextView
             android:id="@+id/tvFechaInicioHabito"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

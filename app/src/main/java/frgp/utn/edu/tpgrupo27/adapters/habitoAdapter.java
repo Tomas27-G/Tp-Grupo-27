@@ -104,6 +104,7 @@ public class habitoAdapter extends BaseAdapter {
             holder = new ViewHolder();
 
             holder.txtNombre = convertView.findViewById(R.id.tvNombreHabito);
+            holder.txtDescripcion = convertView.findViewById(R.id.tvDescripcionHabito);
             holder.txtFechaInicio = convertView.findViewById(R.id.tvFechaInicioHabito);
             holder.checkRealizado = convertView.findViewById(R.id.checkRealizado);
             holder.btnEliminar = convertView.findViewById(R.id.btnEliminar);
@@ -118,7 +119,7 @@ public class habitoAdapter extends BaseAdapter {
         Habito habito = listaHabitos.get(position);
 
         holder.txtNombre.setText(habito.getNombreHabito());
-
+        holder.txtDescripcion.setText(habito.getDescripcionHabito());
         holder.txtFechaInicio.setText(
                 "Inicio: " + formato.format(new Date(habito.getFechaInicio()))
                         + " | Frecuencia: " + frecuenciaTexto(habito.getFrecuencia())
@@ -378,6 +379,7 @@ public class habitoAdapter extends BaseAdapter {
 
         TextView txtNombre;
 
+        TextView txtDescripcion;
         TextView txtFechaInicio;
 
         CheckBox checkRealizado;

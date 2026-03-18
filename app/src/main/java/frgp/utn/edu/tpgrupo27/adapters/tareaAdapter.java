@@ -78,6 +78,7 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
 
         TextView nombre = convertView.findViewById(R.id.txtNombreTarea);
         TextView fechas = convertView.findViewById(R.id.txtFechas);
+        TextView descripcion = convertView.findViewById(R.id.txtDescripcionTarea);
         CheckBox check = convertView.findViewById(R.id.checkTarea);
         ImageButton btnEliminar = convertView.findViewById(R.id.btnEliminarTarea);
         ImageButton btnModificar = convertView.findViewById(R.id.btnModificarTarea);
@@ -92,6 +93,7 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
         String fin = formato.format(new Date(tarea.getFechaFinal()));
 
         fechas.setText("Inicio: " + inicio + " | Fin: " + fin);
+        descripcion.setText(tarea.getDescripcionTarea());
 
         // CHECKBOX ESTADO
         check.setOnCheckedChangeListener(null);
@@ -172,6 +174,11 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
             etNombre.setHint("Nombre");
             layout.addView(etNombre);
 
+            EditText etDescripcion = new EditText(context);
+            etDescripcion.setText(tarea.getDescripcionTarea());
+            etDescripcion.setHint("Descripción");
+            layout.addView(etDescripcion);
+
             TextInputEditText etInicio = new TextInputEditText(context);
             etInicio.setText(formato.format(new Date(tarea.getFechaInicio())));
             etInicio.setHint("Fecha inicio (dd/MM/yyyy)");
@@ -199,16 +206,17 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
                     .setPositiveButton("Aceptar", (dialog, which) -> {
 
                         String nuevoNombre = etNombre.getText().toString().trim();
+                        String nuevaDesc = etDescripcion.getText().toString().trim();
                         String nuevaInicio = etInicio.getText().toString().trim();
                         String nuevaFin = etFin.getText().toString().trim();
 
-                        if(nuevoNombre.isEmpty()){
-                            Toast.makeText(context, "El nombre que modifique no tiene que estar vacio", Toast.LENGTH_SHORT).show();
+                        if(nuevoNombre.isEmpty() || nuevaDesc.isEmpty()){
+                            Toast.makeText(context, "El nombre o la descripción que modifique no tiene que estar vacio", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        if(contieneNumeros(nuevoNombre) ){
+                        if(contieneNumeros(nuevoNombre) || contieneNumeros(nuevaDesc)){
                             Toast.makeText(context,
-                                    "El nombre  no puede tener números",
+                                    "El nombre o la descripción no puede tener números",
                                     Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -231,6 +239,7 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
                         }
 
                         tarea.setNombreTarea(nuevoNombre);
+                        tarea.setDescripcionTarea(nuevaDesc);
                         tarea.setFechaInicio(fechaInicioLong);
                         tarea.setFechaFinal(fechaFinLong);
 
