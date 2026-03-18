@@ -1,5 +1,6 @@
 package frgp.utn.edu.tpgrupo27.adapters;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
@@ -13,7 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -34,6 +38,34 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
         this.lista = lista;
     }
 
+    private void mostrarDatePicker(TextInputEditText editText, long fechaInicial){
+
+        Calendar calendar = Calendar.getInstance();
+
+        int anio = calendar.get(Calendar.YEAR);
+        int mes = calendar.get(Calendar.MONTH);
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                context,
+                (view, year, month, dayOfMonth) -> {
+
+                    month = month + 1;
+
+                    String fecha = String.format(Locale.getDefault(),
+                            "%02d/%02d/%04d", dayOfMonth, month, year);
+
+                    editText.setText(fecha);
+                },
+                anio, mes, dia
+        );
+
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+
+        datePickerDialog.show();
+    }
+
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
 
@@ -42,7 +74,7 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
                     .inflate(R.layout.item_tarea,parent,false);
         }
 
-        Tarea tarea = lista.get(position);
+        final  Tarea tarea = lista.get(position);
 
         TextView nombre = convertView.findViewById(R.id.txtNombreTarea);
         TextView fechas = convertView.findViewById(R.id.txtFechas);
@@ -140,15 +172,26 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
             etNombre.setHint("Nombre");
             layout.addView(etNombre);
 
-            EditText etInicio = new EditText(context);
+            TextInputEditText etInicio = new TextInputEditText(context);
             etInicio.setText(formato.format(new Date(tarea.getFechaInicio())));
             etInicio.setHint("Fecha inicio (dd/MM/yyyy)");
             layout.addView(etInicio);
 
-            EditText etFin = new EditText(context);
+            TextInputEditText etFin = new TextInputEditText(context);
             etFin.setText(formato.format(new Date(tarea.getFechaFinal())));
             etFin.setHint("Fecha final (dd/MM/yyyy)");
             layout.addView(etFin);
+
+            etInicio.setFocusable(false);
+            etFin.setFocusable(false);
+
+            etInicio.setOnClickListener(v1 ->
+                    mostrarDatePicker(etInicio, tarea.getFechaInicio())
+            );
+
+            etFin.setOnClickListener(v1 ->
+                    mostrarDatePicker(etFin, tarea.getFechaFinal())
+            );
 
             new android.app.AlertDialog.Builder(context)
                     .setTitle("Modificar tarea")
@@ -159,11 +202,22 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
                         String nuevaInicio = etInicio.getText().toString().trim();
                         String nuevaFin = etFin.getText().toString().trim();
 
+                        if(nuevoNombre.isEmpty()){
+                            Toast.makeText(context, "El nombre que modifique no tiene que estar vacio", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
                         long fechaInicioLong, fechaFinLong;
 
                         try {
                             fechaInicioLong = formato.parse(nuevaInicio).getTime();
                             fechaFinLong = formato.parse(nuevaFin).getTime();
+                            if(fechaFinLong < fechaInicioLong){
+                                Toast.makeText(getContext(),
+                                        "La fecha final no puede ser menor que la fecha de inicio",
+                                        Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                         } catch (Exception e){
                             Toast.makeText(context, "Formato de fecha incorrecto", Toast.LENGTH_SHORT).show();
                             return;

@@ -1,6 +1,7 @@
 package frgp.utn.edu.tpgrupo27.adapters;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -14,9 +15,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.graphics.Paint;
+
+import com.google.android.material.textfield.TextInputEditText;
+
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 import utils.session;
 
 import frgp.utn.edu.tpgrupo27.R;
@@ -33,6 +40,34 @@ public class habitoAdapter extends BaseAdapter {
         this.context = context;
         this.listaHabitos = listaHabitos;
     }
+
+    private void mostrarDatePicker(TextInputEditText editText, long fechaInicial){
+
+        Calendar calendar = Calendar.getInstance();
+
+        int anio = calendar.get(Calendar.YEAR);
+        int mes = calendar.get(Calendar.MONTH);
+        int dia = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                context,
+                (view, year, month, dayOfMonth) -> {
+
+                    month = month + 1;
+
+                    String fecha = String.format(Locale.getDefault(),
+                            "%02d/%02d/%04d", dayOfMonth, month, year);
+
+                    editText.setText(fecha);
+                },
+                anio, mes, dia
+        );
+
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+
+        datePickerDialog.show();
+    }
+
 
     @Override
     public int getCount() {
@@ -227,7 +262,7 @@ public class habitoAdapter extends BaseAdapter {
             etDescripcion.setHint("Descripción");
             layout.addView(etDescripcion);
 
-            EditText etFechaInicio = new EditText(context);
+            TextInputEditText etFechaInicio = new TextInputEditText(context);
             etFechaInicio.setText(formato.format(new Date(habito.getFechaInicio())));
             etFechaInicio.setHint("Fecha inicio (dd/MM/yyyy)");
             layout.addView(etFechaInicio);
@@ -237,6 +272,10 @@ public class habitoAdapter extends BaseAdapter {
             etFrecuencia.setText(String.valueOf(habito.getFrecuencia()));
             etFrecuencia.setHint("Frecuencia (1:Diaria, 2:Semanal, 3:Mensual)");
             layout.addView(etFrecuencia);
+
+            etFechaInicio.setOnClickListener(v1 ->
+                    mostrarDatePicker(etFechaInicio, habito.getFechaInicio())
+            );;
 
             new AlertDialog.Builder(context)
                     .setTitle("Modificar hábito")
@@ -250,8 +289,19 @@ public class habitoAdapter extends BaseAdapter {
                         String nuevaFechaInicioStr = etFechaInicio.getText().toString().trim();
                         String nuevaFrecuenciaStr = etFrecuencia.getText().toString().trim();
 
+                        if(nuevoNombre.isEmpty()||nuevaDescripcion.isEmpty() ){
+                            Toast.makeText(context, "El nombre o la descripcion que modifique no tiene que estar vacio", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+
+
+
+
+
                         long nuevaFechaInicio;
                         int nuevaFrecuencia;
+
 
                         try {
 
