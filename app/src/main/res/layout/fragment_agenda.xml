@@ -42,7 +42,7 @@
                     android:id="@+id/txtInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tus eventos aparecerán aquí"
+                    android:text="Tus hábitos y tareas van a aparecer acá"
                     android:textSize="14sp"
                     android:textColor="#666666"
                     android:layout_marginBottom="12dp"/>
