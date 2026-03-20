@@ -3,6 +3,7 @@ package frgp.utn.edu.tpgrupo27.adapters;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,9 +37,30 @@ public class habitoAdapter extends BaseAdapter {
     private List<Habito> listaHabitos;
     private SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
+    private void resetearSiEsNuevoDia() {
+
+        SharedPreferences prefs = context.getSharedPreferences("app", Context.MODE_PRIVATE);
+
+        int ultimoDia = prefs.getInt("ultimo_dia", -1);
+
+        Calendar hoy = Calendar.getInstance();
+        int diaActual = hoy.get(Calendar.DAY_OF_YEAR);
+
+        if (diaActual != ultimoDia) {
+
+            for (Habito h : listaHabitos) {
+                h.setCheckeado(false);
+            }
+
+            prefs.edit().putInt("ultimo_dia", diaActual).apply();
+        }
+    }
+
     public habitoAdapter(Context context, List<Habito> listaHabitos) {
         this.context = context;
         this.listaHabitos = listaHabitos;
+
+        resetearSiEsNuevoDia();
     }
 
     private void mostrarDatePicker(TextInputEditText editText, long fechaInicial){
@@ -95,6 +117,7 @@ public class habitoAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
 
         ViewHolder holder;
 
