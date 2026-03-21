@@ -1,4 +1,5 @@
 package frgp.utn.edu.tpgrupo27;
+import android.content.Context;
 import android.graphics.Paint;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -47,7 +48,6 @@ public class fragmentAgenda extends Fragment {
         mostrarTareas();
         mostrarHabitos();
 
-        // SPINNER FILTRO
 
         spFiltro = view.findViewById(R.id.spFiltro);
 
@@ -69,39 +69,49 @@ public class fragmentAgenda extends Fragment {
 
         adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spFiltro.setAdapter(adapterSpinner);
-        // 🔥 ACÁ VA EL LISTENER
+
         spFiltro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 switch (position) {
                     case 0:
+                        lvTareas.setVisibility(View.VISIBLE);
+                        lvHabitos.setVisibility(View.VISIBLE);
                         mostrarTareas();
                         mostrarHabitos();
                         break;
 
                     case 1:
+                        lvTareas.setVisibility(View.VISIBLE);
+                        lvHabitos.setVisibility(View.GONE);
                         mostrarTareas(); //Todas las tareas
                         break;
 
                     case 2:
-                        mostrarTareasFiltradas(false);// Tareas hechas
+                        lvTareas.setVisibility(View.VISIBLE);
+                        mostrarTareasFiltradas(true);// Tareas hechas
                         break;
 
                     case 3:
-                        mostrarHabitosFiltrados(true);// Tareas pendientes
+                        lvTareas.setVisibility(View.VISIBLE);
+                        mostrarTareasFiltradas(false);// Tareas pendientes
                         break;
 
                     case 4:
+                        lvTareas.setVisibility(View.GONE);
+                        lvHabitos.setVisibility(View.VISIBLE);
                         mostrarHabitos(); //Todos los habitos
                         break;
 
                     case 5:
-                         // mostrar habitos hechos
+                        lvHabitos.setVisibility(View.VISIBLE);
+                        mostrarHabitosFiltrados(true); // mostrar habitos hechos
                         break;
 
                     case 6:
-                        // mostrar habitos no hechos
+                        lvHabitos.setVisibility(View.VISIBLE);
+                        mostrarHabitosFiltrados(false); // mostrar habitos no hechos
                         break;
 
 
@@ -112,14 +122,53 @@ public class fragmentAgenda extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        // ⚠️ OPCIONAL: esto ya no hace falta si usás el spinner
-        // mostrarTareas();
-        // mostrarHabitos();
 
         return view;
 
 
     }
+
+    public void mostrarTareasFiltradas(boolean hechas){
+
+      session session = new session(requireContext());
+
+      int idUsuario = session.getIdUsuario();
+
+      negocioTarea negocio = new negocioTarea(requireContext(), idUsuario);
+
+        List<Tarea> todas = negocio.listarTareas();
+        List<Tarea> filtradas = new ArrayList<>();
+
+        for (Tarea t : todas) {
+            if (t.getCheckeado() == hechas) {
+                filtradas.add(t);
+            }
+        }
+
+        tareaAdapter adapter = new tareaAdapter(requireContext(), filtradas);
+        lvTareas.setAdapter(adapter);
+    }
+
+    private void mostrarHabitosFiltrados(boolean hechos) {
+
+        session sesion = new session(requireContext());
+        int idUsuario = sesion.getIdUsuario();
+
+        negocioHabito negocio = new negocioHabito(requireContext(), idUsuario);
+
+        List<Habito> todos = negocio.obtenerHabitos();
+        List<Habito> filtrados = new ArrayList<>();
+
+        for (Habito h : todos) {
+            if (h.getCheckeado() == hechos) {
+                filtrados.add(h);
+            }
+        }
+
+        habitoAdapter adapter = new habitoAdapter(requireContext(), filtrados);
+        lvHabitos.setAdapter(adapter);
+    }
+
 
     private void mostrarTareas() {
 

@@ -96,11 +96,6 @@ public class fragmentLogin extends Fragment {
                     "IDUSUARIO " + usuario.getIdUsuario(),
                     Toast.LENGTH_SHORT).show();
 
-          //  Toast.makeText(requireContext(),
-               //     "Bienvenido " + usuario.getNombre(),
-                //    Toast.LENGTH_SHORT).show();//
-
-            // Reiniciar MainActivity limpio
             Intent intent = new Intent(requireContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

@@ -105,9 +105,9 @@ public class fragmentInicio extends Fragment {
         cargarGraficoHabitos();
     }
 
-    // =========================
+
     // GRAFICO GENERAL
-    // =========================
+
 
     private void cargarGraficoGeneral(){
 
@@ -128,10 +128,7 @@ public class fragmentInicio extends Fragment {
         barChartGeneral.animateY(1000);
         barChartGeneral.invalidate();
     }
-
-    // =========================
     // PIE TAREAS
-    // =========================
 
     private void cargarGraficoTareas(){
 
@@ -151,9 +148,8 @@ public class fragmentInicio extends Fragment {
         pieChartTareas.invalidate();
     }
 
-    // =========================
     // PIE HABITOS
-    // =========================
+
 
     private void cargarGraficoHabitos(){
 

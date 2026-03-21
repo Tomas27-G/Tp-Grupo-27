@@ -107,7 +107,7 @@ public class fragmentRegistro extends Fragment {
         usuario.setApellido(apellido);
         usuario.setMail(email);
         usuario.setContrasena(pass);
-        usuario.setFechaNacimiento(edad); // usás edad como fecha
+        usuario.setFechaNacimiento(edad);
 
         negocioUsuario negocio = new negocioUsuario(requireContext());
 

@@ -29,12 +29,12 @@ public class fragmentHabitos extends Fragment {
 
     private TextInputEditText nombreHabito, descripHabito, fechaInicioHabito;
 
-    private Spinner spinnerFrecuencia;   //HAY que ver como funciona
+    private Spinner spinnerFrecuencia;
     private MaterialButton botonGuardarHabito;
     private android.widget.ListView listViewHabitos;
 
     public fragmentHabitos() {
-        // Required empty public constructor
+
     }
 
     private void mostrarDatePicker(TextInputEditText editText){
