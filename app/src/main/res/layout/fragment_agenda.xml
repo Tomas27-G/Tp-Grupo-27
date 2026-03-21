@@ -46,6 +46,11 @@
                     android:textSize="14sp"
                     android:textColor="#666666"
                     android:layout_marginBottom="12dp"/>
+                <Spinner
+                    android:id="@+id/spFiltro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"/>
 
                 <TextView
                     android:id="@+id/txtTareas"
