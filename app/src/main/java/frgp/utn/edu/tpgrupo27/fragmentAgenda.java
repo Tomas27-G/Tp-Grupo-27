@@ -90,11 +90,13 @@ public class fragmentAgenda extends Fragment {
 
                     case 2:
                         lvTareas.setVisibility(View.VISIBLE);
+                        lvHabitos.setVisibility(View.GONE);
                         mostrarTareasFiltradas(true);// Tareas hechas
                         break;
 
                     case 3:
                         lvTareas.setVisibility(View.VISIBLE);
+                        lvHabitos.setVisibility(View.GONE);
                         mostrarTareasFiltradas(false);// Tareas pendientes
                         break;
 
@@ -106,11 +108,13 @@ public class fragmentAgenda extends Fragment {
 
                     case 5:
                         lvHabitos.setVisibility(View.VISIBLE);
+                        lvTareas.setVisibility(View.GONE);
                         mostrarHabitosFiltrados(true); // mostrar habitos hechos
                         break;
 
                     case 6:
                         lvHabitos.setVisibility(View.VISIBLE);
+                        lvTareas.setVisibility(View.GONE);
                         mostrarHabitosFiltrados(false); // mostrar habitos no hechos
                         break;
 
