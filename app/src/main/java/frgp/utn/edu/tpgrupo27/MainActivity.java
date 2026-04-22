@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        // new RecordatorioReceiver().onReceive(this, new Intent());
+         new RecordatorioReceiver().onReceive(this, new Intent());
         // NotificacionHelper.programarNotificacionDiaria(this, 17, 39); // a que hora llegan las notificaciones
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
