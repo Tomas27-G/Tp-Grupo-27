@@ -108,9 +108,13 @@ public class habitoAdapter extends BaseAdapter {
 
     private String frecuenciaTexto(int frecuencia) {
         switch (frecuencia) {
-            case 1: return "Diaria";
-            case 2: return "Semanal";
-            case 3: return "Mensual";
+            case 1: return "1 dia";
+            case 2: return "2 dias";
+            case 3: return "3 dias";
+            case 4: return "4 dias";
+            case 5: return "5 dias";
+            case 6: return "6 dias";
+            case 7: return "7 dias";
             default: return "Desconocida";
         }
     }

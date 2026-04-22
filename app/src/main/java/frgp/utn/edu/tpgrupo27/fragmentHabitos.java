@@ -158,13 +158,17 @@ public class fragmentHabitos extends Fragment {
             Toast.makeText(requireContext(),
                     "Habito registrado correctamente",
                     Toast.LENGTH_SHORT).show();
-
+            limpiarCampos();
         }else{
             Toast.makeText(requireContext(),
                     "Error al registrar habito",
                     Toast.LENGTH_SHORT).show();
         }
     }
-
-
+    private void limpiarCampos() {
+        nombreHabito.setText("");
+        descripHabito.setText("");
+        fechaInicioHabito.setText("");
+        spinnerFrecuencia.setSelection(0);
+    }
 }

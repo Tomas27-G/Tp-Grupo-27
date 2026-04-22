@@ -92,10 +92,6 @@ public class fragmentLogin extends Fragment {
             session sesion = new session(requireContext());
             sesion.crearSesion(usuario.getIdUsuario(), usuario.getNombre());
 
-            Toast.makeText(requireContext(),
-                    "IDUSUARIO " + usuario.getIdUsuario(),
-                    Toast.LENGTH_SHORT).show();
-
             Intent intent = new Intent(requireContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
