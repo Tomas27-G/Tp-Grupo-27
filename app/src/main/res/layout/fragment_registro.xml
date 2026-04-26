@@ -79,21 +79,28 @@
 
             <!-- EDAD -->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutEdad"
+                android:id="@+id/etEdad"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:hint="Edad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="14dp"
-                app:startIconDrawable="@drawable/ic_age">
+                android:layout_marginBottom="12dp"
+                android:textColorHint="@color/greenperron"
+
+                app:startIconDrawable="@drawable/ic_age"
+
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusBottomEnd="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etEdad"
+                    android:id="@+id/editEdad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:inputType="date" />
 
+            </com.google.android.material.textfield.TextInputLayout>
             <!-- EMAIL -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/layoutEmail"
