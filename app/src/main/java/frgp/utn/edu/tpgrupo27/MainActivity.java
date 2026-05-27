@@ -59,18 +59,45 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigation.setOnItemSelectedListener(item -> {
 
+            Fragment fragmentActual =
+                    getSupportFragmentManager()
+                            .findFragmentById(R.id.fragment_container);
+
             Fragment fragment = null;
 
             if (item.getItemId() == R.id.inicio) {
+
+                if (fragmentActual instanceof fragmentInicio) {
+                    return true;
+                }
+
                 fragment = new fragmentInicio();
             }
+
             if (item.getItemId() == R.id.tareas) {
+
+                if (fragmentActual instanceof fragmentTareas) {
+                    return true;
+                }
+
                 fragment = new fragmentTareas();
             }
+
             if (item.getItemId() == R.id.habitos) {
+
+                if (fragmentActual instanceof fragmentHabitos) {
+                    return true;
+                }
+
                 fragment = new fragmentHabitos();
             }
+
             if (item.getItemId() == R.id.agenda) {
+
+                if (fragmentActual instanceof fragmentAgenda) {
+                    return true;
+                }
+
                 fragment = new fragmentAgenda();
             }
 
@@ -79,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
                         .beginTransaction()
                         .replace(R.id.fragment_container, fragment)
                         .commit();
+
                 return true;
             }
 
