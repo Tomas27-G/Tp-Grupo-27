@@ -19,5 +19,9 @@
         android:id="@+id/agenda"
         android:icon="@drawable/agenda"
         android:title="Agenda" />
+    <item
+        android:id="@+id/perfil"
+        android:icon="@drawable/ic_person"
+        android:title="Perfil" />
 
 </menu>

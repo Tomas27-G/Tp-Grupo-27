@@ -100,6 +100,14 @@ public class MainActivity extends AppCompatActivity {
 
                 fragment = new fragmentAgenda();
             }
+            if(item.getItemId() == R.id.perfil){
+                if (fragmentActual instanceof fragment_perfil)
+                {
+                    return true;
+                }
+
+                fragment = new fragment_perfil();
+            }
 
             if (fragment != null) {
                 getSupportFragmentManager()
