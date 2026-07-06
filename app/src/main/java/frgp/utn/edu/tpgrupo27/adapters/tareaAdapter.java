@@ -26,7 +26,7 @@ import frgp.utn.edu.tpgrupo27.R;
 import frgp.utn.edu.tpgrupo27.entidades.Tarea;
 import frgp.utn.edu.tpgrupo27.negocio.negocioTarea;
 import utils.session;
-
+import android.graphics.Color;
 public class tareaAdapter extends ArrayAdapter<Tarea> {
 
     private Context context;
@@ -82,8 +82,9 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
         CheckBox check = convertView.findViewById(R.id.checkTarea);
         ImageButton btnEliminar = convertView.findViewById(R.id.btnEliminarTarea);
         ImageButton btnModificar = convertView.findViewById(R.id.btnModificarTarea);
+        View viewPrioridad = convertView.findViewById(R.id.viewPrioridad);
 
-        // Mostrar datos
+         // Mostrar datos
         nombre.setText(tarea.getNombreTarea());
 
         SimpleDateFormat formato =
@@ -94,6 +95,19 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
 
         fechas.setText("Inicio: " + inicio + " | Fin: " + fin);
         descripcion.setText(tarea.getDescripcionTarea());
+        //PRIORIDADES COLORES
+        switch (tarea.getPrioridad()){
+            case 1:
+                viewPrioridad.setBackgroundColor(Color.parseColor("#43A047"));
+
+                break;
+            case 2:
+                viewPrioridad.setBackgroundColor(Color.parseColor("#FBC02D"));
+                break;
+            case 3:
+                viewPrioridad.setBackgroundColor(Color.parseColor("#E53935"));
+                break;
+        }
 
         // CHECKBOX ESTADO
         check.setOnCheckedChangeListener(null);

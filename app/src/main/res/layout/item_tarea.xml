@@ -10,6 +10,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:buttonTint="@color/checkbox_checked"/>
+    <View
+        android:id="@+id/viewPrioridad"
+        android:layout_width="8dp"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="8dp"/>
 
     <LinearLayout
         android:layout_width="0dp"

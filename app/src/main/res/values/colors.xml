@@ -7,4 +7,9 @@
     <color name="greenperron">#518573</color>
     <color name="checkbox_checked">#4CAF50</color>
     <color name="checkbox_unchecked">#BDBDBD</color>
+
+    <!-- Prioridades los colores -->
+    <color name="prioridad_alta">#FFFF0000</color>
+    <color name="prioridad_media">#FFFF9800</color>
+    <color name="prioridad_baja">#4CAF50</color>
 </resources>
