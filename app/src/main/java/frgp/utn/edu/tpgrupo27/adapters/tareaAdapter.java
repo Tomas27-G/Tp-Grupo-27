@@ -95,7 +95,7 @@ public class tareaAdapter extends ArrayAdapter<Tarea> {
 
         fechas.setText("Inicio: " + inicio + " | Fin: " + fin);
         descripcion.setText(tarea.getDescripcionTarea());
-        //PRIORIDADES COLORES
+
         switch (tarea.getPrioridad()){
             case 1:
                 viewPrioridad.setBackgroundColor(Color.parseColor("#43A047"));
